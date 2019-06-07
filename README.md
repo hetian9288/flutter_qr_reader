@@ -4,7 +4,7 @@ QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
 ## DEMO
 
-![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/flutter_qr_reader/ezgif-3-7c8bfe5fd68a.gif?raw=true)
+![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/ezgif-3-7c8bfe5fd68a.gif?raw=true)
 
 ## Getting Started
 ```import 'package:flutter_qr_reader/flutter_qr_reader.dart';```
