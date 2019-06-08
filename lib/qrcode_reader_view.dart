@@ -231,15 +231,6 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
   }
 }
 
-class dasa extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    //TODO
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
 
 class QrScanBoxPainter extends CustomPainter {
   final double animationValue;

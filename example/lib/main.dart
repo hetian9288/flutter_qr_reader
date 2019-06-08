@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:flutter_qr_reader_example/scanViewDemo.dart';
 import 'package:image_picker/image_picker.dart';
