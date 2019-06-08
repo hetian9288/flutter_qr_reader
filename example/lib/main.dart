@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+import 'package:flutter_qr_reader_example/scanViewDemo.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -73,9 +74,15 @@ class _HomePageState extends State<HomePage> {
               color: Colors.blue,
             ),
             FlatButton(
+              onPressed: () async {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanViewDemo()));
+              },
+              child: Text("独立UI"),
+            ),
+            FlatButton(
                 onPressed: () async {
                   var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                  if (image == null) return ;
+                  if (image == null) return;
                   final rest = await FlutterQrReader.imgScan(image);
                   setState(() {
                     data = rest;

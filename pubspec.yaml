@@ -1,15 +1,16 @@
 name: flutter_qr_reader
-description: QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
+description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
 version: 0.0.1
-author: hetian@hetian.me
+author: 王贺天<hetian@hetian.me>
 homepage: https://github.com/hetian9288/flutter_qr_reader
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  image_picker: ^0.6.0+9
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +33,11 @@ flutter:
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
+  assets:
+    - assets/tool_img.png
+    - assets/tool_qrcode.png
+    - assets/tool_flashlight_close.png
+    - assets/tool_flashlight_open.png
   #
   # For details regarding assets in packages, see
   # https://flutter.dev/assets-and-images/#from-packages
