@@ -11,11 +11,13 @@ class QrcodeReaderView extends StatefulWidget {
   final Future Function(String) onScan;
   final double scanBoxRatio;
   final Color boxLineColor;
+  final Widget helpWidget;
   QrcodeReaderView({
     Key key,
     @required this.onScan,
     this.headerWidget,
     this.boxLineColor = Colors.cyanAccent,
+    this.helpWidget,
     this.scanBoxRatio = 0.85,
   }) : super(key: key);
 
@@ -89,7 +91,7 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) {
       startScan();
-      return ;
+      return;
     }
     final rest = await FlutterQrReader.imgScan(image);
     await widget.onScan(rest);
@@ -152,9 +154,9 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
               width: constraints.maxWidth,
               child: Align(
                 alignment: Alignment.center,
-                child: Text(
-                  "请将二维码置于方框中",
+                child: DefaultTextStyle(
                   style: TextStyle(color: Colors.white),
+                  child: widget.headerWidget ?? Text("请将二维码置于方框中"),
                 ),
               ),
             ),
