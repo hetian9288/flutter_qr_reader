@@ -36,9 +36,11 @@ QrReaderView(
 ``` dart
 Widget build(BuildContext context) {
     return new Scaffold(
-      body: QrcodeReaderView(onScan: onScan),
+      body: QrcodeReaderView(key: qrViewKey, onScan: onScan),
     );
 }
+
+GlobalKey<QrcodeReaderViewState> qrViewKey = GlobalKey();
 
 Future onScan(String data) async {
     await showCupertinoDialog(
@@ -56,5 +58,6 @@ Future onScan(String data) async {
         );
       },
     );
+    qrViewKey.currentState.startScan();
 }
 ```
