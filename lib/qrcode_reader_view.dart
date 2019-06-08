@@ -29,6 +29,7 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
   QrReaderViewController _controller;
   AnimationController _animationController;
   bool openFlashlight;
+  Timer _timer;
   @override
   void initState() {
     super.initState();
@@ -44,11 +45,11 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
       ..addListener(upState)
       ..addStatusListener((state) {
         if (state == AnimationStatus.completed) {
-          Timer(Duration(seconds: 1), () {
+          _timer = Timer(Duration(seconds: 1), () {
             _animationController?.reverse(from: 1.0);
           });
         } else if (state == AnimationStatus.dismissed) {
-          Timer(Duration(seconds: 1), () {
+          _timer =Timer(Duration(seconds: 1), () {
             _animationController?.forward(from: 0.0);
           });
         }
@@ -57,6 +58,7 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
   }
 
   void _clearAnimation() {
+    _timer?.cancel();
     _animationController?.dispose();
     _animationController = null;
   }
@@ -230,7 +232,7 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
 
   @override
   void dispose() {
-    _animationController?.dispose();
+    _clearAnimation();
     super.dispose();
   }
 }
