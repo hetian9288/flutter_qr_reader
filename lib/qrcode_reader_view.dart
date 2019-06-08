@@ -70,10 +70,14 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
     _controller.startCamera(onQrBack);
   }
 
+  bool isScan = false;
   Future onQrBack(data, _) async {
+    if (isScan == true) return ;
+    isScan = true;
     stopScan();
     await widget.onScan(data);
     startScan();
+    isScan = false;
   }
 
   void startScan() {

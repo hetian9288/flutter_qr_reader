@@ -12,6 +12,22 @@ QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
 ``` dart
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+
+// 识别图片
+final String data = await FlutterQrReader.imgScan(File);
+
+// 嵌入视图
+QrReaderView(
+  width: 320,
+  height: 350,
+  callback: (container) {},
+)
+// 打开手电筒
+..setFlashlight
+// 开始扫码
+..startCamera
+// 结束扫码
+..stopCamera
 ```
 
 
