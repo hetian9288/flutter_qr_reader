@@ -10,12 +10,14 @@ QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
 ## Getting Started
 
-```import 'package:flutter_qr_reader/flutter_qr_reader.dart';```
+``` dart
+import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+```
 
 
 ## Built-in UI
 
-```
+``` dart
 Widget build(BuildContext context) {
     return new Scaffold(
       body: QrcodeReaderView(onScan: onScan),
