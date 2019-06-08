@@ -156,7 +156,7 @@ class _QrcodeReaderViewState extends State<QrcodeReaderView> with TickerProvider
                 alignment: Alignment.center,
                 child: DefaultTextStyle(
                   style: TextStyle(color: Colors.white),
-                  child: widget.headerWidget ?? Text("请将二维码置于方框中"),
+                  child: widget.helpWidget ?? Text("请将二维码置于方框中"),
                 ),
               ),
             ),
