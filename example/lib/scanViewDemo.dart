@@ -10,6 +10,7 @@ class ScanViewDemo extends StatefulWidget {
 }
 
 class _ScanViewDemoState extends State<ScanViewDemo> {
+  GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -18,7 +19,14 @@ class _ScanViewDemoState extends State<ScanViewDemo> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      body: QrcodeReaderView(onScan: onScan),
+      body: QrcodeReaderView(
+        key: _key,
+        onScan: onScan,
+        headerWidget: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+      ),
     );
   }
 
@@ -38,6 +46,7 @@ class _ScanViewDemoState extends State<ScanViewDemo> {
         );
       },
     );
+    _key.currentState.startScan();
   }
 
   @override
