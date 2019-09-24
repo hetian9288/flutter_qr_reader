@@ -30,6 +30,17 @@ QrReaderView(
 ..stopCamera
 ```
 
+### For IOS
+Opt-in to the embedded views preview by adding a boolean property to the app's Info.plist file with the key io.flutter.embedded_views_preview and the value YES.
+
+	<key>io.flutter.embedded_views_preview</key>
+	<string>YES</string>
+
+And you will need provide the description of camera's permission to work properly, otherwise will crash your app.
+``` 
+  <key>NSCameraUsageDescription</key>
+	<string>The porpuse explaining why you will use the camera</string>
+```
 
 ## Built-in UI
 
