@@ -94,13 +94,18 @@ public final class OpenCameraInterface {
 
     Camera.Parameters params = camera.getParameters();
     if (params.getSupportedFocusModes().contains(
-      Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
-      params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+      Camera.Parameters.FOCUS_MODE_AUTO)) {
+      params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
       camera.setParameters(params);
     }
     else if (params.getSupportedFocusModes().contains(
-      Camera.Parameters.FOCUS_MODE_AUTO)) {
-      params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+      Camera.Parameters.FOCUS_MODE_MACRO)) {
+      params.setFocusMode(Camera.Parameters.FOCUS_MODE_MACRO);
+      camera.setParameters(params);
+    }
+    else if (params.getSupportedFocusModes().contains(
+      Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+      params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
       camera.setParameters(params);
     }
 
@@ -109,5 +114,4 @@ public final class OpenCameraInterface {
         CameraFacing.values()[selectedCameraInfo.facing],
         selectedCameraInfo.orientation);
   }
-
 }
