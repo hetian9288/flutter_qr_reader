@@ -109,6 +109,13 @@ public final class OpenCameraInterface {
       camera.setParameters(params);
     }
 
+    if (params.getSupportedSceneModes().contains(Camera.Parameters.SCENE_MODE_BARCODE)) {
+      params.setSceneMode(Camera.Parameters.SCENE_MODE_BARCODE);
+    }
+    else if (params.getSupportedSceneModes().contains(Camera.Parameters.SCENE_MODE_AUTO)) {
+      params.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+    }
+
     return new OpenCamera(index,
         camera,
         CameraFacing.values()[selectedCameraInfo.facing],
