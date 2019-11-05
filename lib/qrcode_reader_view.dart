@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 /// Relevant privileges must be obtained before use
 class QrcodeReaderView extends StatefulWidget {
   final Widget headerWidget;
-  final Future Function(String) onScan;
+  final Future Function(String, BuildContext context) onScan;
   final double scanBoxRatio;
   final Color boxLineColor;
   final Widget helpWidget;
@@ -31,7 +31,7 @@ class QrcodeReaderView extends StatefulWidget {
 /// qrViewKey.currentState.startScan();
 /// ```
 class QrcodeReaderViewState extends State<QrcodeReaderView>
-        with TickerProviderStateMixin {
+        with SingleTickerProviderStateMixin {
   QrReaderViewController _controller;
   AnimationController _animationController;
   bool openFlashlight;
@@ -86,7 +86,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     if (isScan == true) return;
     isScan = true;
     stopScan();
-    await widget.onScan(data);
+    await widget.onScan(data, context);
   }
 
   void startScan() {
@@ -109,12 +109,13 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
   Future _scanImage() async {
     stopScan();
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if(image.existsSync() == false) image.createSync();
     if (image == null) {
       startScan();
       return;
     }
     final rest = await FlutterQrReader.imgScan(image);
-    await widget.onScan(rest);
+    await widget.onScan(rest, context);
     startScan();
   }
 
@@ -179,7 +180,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                 alignment: Alignment.center,
                 child: DefaultTextStyle(
                   style: TextStyle(color: Colors.white),
-                  child: widget.helpWidget ?? Text("请将二维码置于方框中"),
+                  textAlign: TextAlign.center,
+                  child: widget.helpWidget ?? Text("Galeriden fotoğraf seçmek için aşağıdaki butonu kullanın."),
                 ),
               ),
             ),
@@ -205,14 +207,18 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                       : 12,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: _scanImage,
                     child: Container(
-                      width: 45,
-                      height: 45,
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(40)),
+                        border: Border.all(color: Colors.white30, width: 12),
+                      ),
                       alignment: Alignment.center,
                       child: Image.asset(
                         "assets/tool_img.png",
@@ -223,23 +229,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                       ),
                     ),
                   ),
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(40)),
-                      border: Border.all(color: Colors.white30, width: 12),
-                    ),
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      "assets/tool_qrcode.png",
-                      package: "flutter_qr_reader",
-                      width: 35,
-                      height: 35,
-                      color: Colors.white54,
-                    ),
-                  ),
-                  SizedBox(width: 45, height: 45),
+
                 ],
               ),
             )
