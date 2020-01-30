@@ -1,6 +1,7 @@
 package me.hetian.flutter_qr_reader;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.File;
@@ -65,7 +66,7 @@ public class FlutterQrReaderPlugin implements MethodCallHandler {
       @Override
       protected String doInBackground(String... params) {
         // 解析二维码/条码
-        return QRCodeDecoder.syncDecodeQRCode(filePath);
+        return QRCodeDecoder.syncDecodeQRCode(registrar.context(), filePath);
       }
       @Override
       protected void onPostExecute(String s) {

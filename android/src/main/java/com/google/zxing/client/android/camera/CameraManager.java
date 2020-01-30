@@ -25,6 +25,7 @@ import com.google.zxing.PlanarYUVLuminanceSource;
 
 import java.io.IOException;
 
+import me.hetian.flutter_qr_reader.reader.MyPlanarYUVLuminanceSource;
 import me.hetian.flutter_qr_reader.readerView.SimpleLog;
 import com.google.zxing.client.android.camera.open.OpenCamera;
 import com.google.zxing.client.android.camera.open.OpenCameraInterface;
@@ -230,9 +231,9 @@ public final class CameraManager {
    * @param data A preview frame.
    * @param width The width of the image.
    * @param height The height of the image.
-   * @return A PlanarYUVLuminanceSource instance.
+   * @return A MyPlanarYUVLuminanceSource instance.
    */
-  public PlanarYUVLuminanceSource buildLuminanceSource(byte[] data, int width, int height) {
-    return new PlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
+  public MyPlanarYUVLuminanceSource buildLuminanceSource(byte[] data, int width, int height) {
+    return new MyPlanarYUVLuminanceSource(data, width, height, 0, 0, width, height, false);
   }
 }

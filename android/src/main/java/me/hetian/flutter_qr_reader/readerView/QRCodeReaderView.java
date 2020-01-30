@@ -23,27 +23,36 @@ import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import com.google.zxing.BarcodeFormat;
 import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
-import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.EnumSet;
 import java.util.Map;
 
 import com.google.zxing.client.android.camera.CameraManager;
+
+import me.hetian.flutter_qr_reader.reader.DecodeFormatManager;
+import me.hetian.flutter_qr_reader.reader.MyMultiFormatReader;
+import me.hetian.flutter_qr_reader.reader.MyPlanarYUVLuminanceSource;
 
 import static android.hardware.Camera.getCameraInfo;
 
@@ -65,7 +74,7 @@ public class QRCodeReaderView extends SurfaceView
 
     private static final String TAG = QRCodeReaderView.class.getName();
 
-    private QRCodeReader mQRCodeReader;
+    private MyMultiFormatReader mQRCodeReader;
     private int mPreviewWidth;
     private int mPreviewHeight;
     private CameraManager mCameraManager;
@@ -83,6 +92,10 @@ public class QRCodeReaderView extends SurfaceView
         if (isInEditMode()) {
             return;
         }
+        decodeHints = new EnumMap<>(DecodeHintType.class);
+        decodeHints.put(DecodeHintType.TRY_HARDER, BarcodeFormat.QR_CODE);
+        decodeHints.put(DecodeHintType.CHARACTER_SET, "utf-8");
+//        decodeHints.put(DecodeHintType.PURE_BARCODE, Boolean.FALSE);
 
         if (checkCameraHardware()) {
             mCameraManager = new CameraManager(getContext());
@@ -123,12 +136,31 @@ public class QRCodeReaderView extends SurfaceView
     }
 
     /**
-     * Set QR hints required for decoding
-     *
-     * @param decodeHints hints for decoding qrcode
+     * 设置解码器，默认为二维码、条形码
+     * @param decodeMode DecodeFormatManager.ALL_MODE, DecodeFormatManager.QRCODE_MODE, DecodeFormatManager.BARCODE_MODE
      */
-    public void setDecodeHints(Map<DecodeHintType, Object> decodeHints) {
-        this.decodeHints = decodeHints;
+    public void setDecodeHints(int decodeMode) {
+        Collection<BarcodeFormat> decodeFormats = new ArrayList<BarcodeFormat>();
+        decodeFormats.addAll(EnumSet.of(BarcodeFormat.AZTEC));
+        decodeFormats.addAll(EnumSet.of(BarcodeFormat.PDF_417));
+        switch (decodeMode) {
+            case DecodeFormatManager.BARCODE_MODE:
+                decodeFormats.addAll(DecodeFormatManager.getBarCodeFormats());
+                break;
+
+            case DecodeFormatManager.QRCODE_MODE:
+                decodeFormats.addAll(DecodeFormatManager.getQrCodeFormats());
+                break;
+
+            case DecodeFormatManager.ALL_MODE:
+                decodeFormats.addAll(DecodeFormatManager.getBarCodeFormats());
+                decodeFormats.addAll(DecodeFormatManager.getQrCodeFormats());
+                break;
+
+            default:
+                break;
+        }
+        decodeHints.put(DecodeHintType.POSSIBLE_FORMATS, decodeFormats);
     }
 
     /**
@@ -229,7 +261,7 @@ public class QRCodeReaderView extends SurfaceView
         }
 
         try {
-            mQRCodeReader = new QRCodeReader();
+            mQRCodeReader = new MyMultiFormatReader();
             mCameraManager.startPreview();
         } catch (Exception e) {
             SimpleLog.e(TAG, "Exception: " + e.getMessage());
@@ -280,7 +312,9 @@ public class QRCodeReaderView extends SurfaceView
                 || decodeFrameTask.getStatus() == AsyncTask.Status.PENDING)) {
             return;
         }
-
+        if (!decodeHints.containsKey(DecodeHintType.POSSIBLE_FORMATS)) {
+            this.setDecodeHints(DecodeFormatManager.ALL_MODE);
+        }
         decodeFrameTask = new DecodeFrameTask(this, decodeHints);
         decodeFrameTask.execute(data);
     }
@@ -362,21 +396,20 @@ public class QRCodeReaderView extends SurfaceView
                 return null;
             }
 
-            final PlanarYUVLuminanceSource source =
+            LuminanceSource source =
                     view.mCameraManager.buildLuminanceSource(params[0], view.mPreviewWidth,
                             view.mPreviewHeight);
 
+            source = source.rotateCounterClockwise();
             final HybridBinarizer hybBin = new HybridBinarizer(source);
             final BinaryBitmap bitmap = new BinaryBitmap(hybBin);
 
             try {
+                Log.i(TAG, "doInBackground: " + hintsRef.get());
                 return view.mQRCodeReader.decode(bitmap, hintsRef.get());
-            } catch (ChecksumException e) {
-                SimpleLog.d(TAG, "ChecksumException", e);
             } catch (NotFoundException e) {
-                SimpleLog.d(TAG, "No QR Code found");
-            } catch (FormatException e) {
-                SimpleLog.d(TAG, "FormatException", e);
+                Log.i(TAG, "doInBackground: " + e.getLocalizedMessage());
+                e.printStackTrace();
             } finally {
                 view.mQRCodeReader.reset();
             }
@@ -393,8 +426,7 @@ public class QRCodeReaderView extends SurfaceView
             // Notify we found a QRCode
             if (view != null && result != null && view.mOnQRCodeReadListener != null) {
                 // Transform resultPoints to View coordinates
-                final PointF[] transformedPoints =
-                        transformToViewCoordinates(view, result.getResultPoints());
+                final PointF[] transformedPoints = transformToViewCoordinates(view, result.getResultPoints());
                 view.mOnQRCodeReadListener.onQRCodeRead(result.getText(), transformedPoints);
             }
         }

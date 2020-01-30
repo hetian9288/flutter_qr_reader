@@ -1,1 +1,0 @@
-copy：https://github.com/dlazaro66/QRCodeReaderView
