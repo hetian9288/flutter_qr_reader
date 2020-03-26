@@ -84,8 +84,8 @@ class _QrReaderViewState extends State<QrReaderView> {
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
         gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-          new Factory<OneSequenceGestureRecognizer>(
-            () => new EagerGestureRecognizer(),
+          Factory<OneSequenceGestureRecognizer>(
+            () => EagerGestureRecognizer(),
           ),
         ].toSet(),
       );
@@ -98,11 +98,6 @@ class _QrReaderViewState extends State<QrReaderView> {
     widget.callback(
       QrReaderViewController(id),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
 

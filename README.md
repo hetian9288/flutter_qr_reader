@@ -4,15 +4,25 @@
 
 QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
+# features:
+- place the code inside the square frame to get the information from QR code
+- select QR code from your local library from the image picker inside the ScanView
+
 
 ## Getting Started
 
 ```dart
 import 'package:super_qr_reader/scan_view.dart';
 
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
+
+  @override
+  _HomePageState createState() => new _HomePageState();
+}
+
 class _HomePageState extends State<HomePage> {
-  bool isOk = false;
-  String data = '';
+  String result = '';
 
   var scanResult;
   @override
@@ -24,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Plugin example app'),
+        title: const Text('Package example app'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -34,22 +44,22 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                String results = await Navigator.push( //waiting for the scan results
+                String results = await Navigator.push( // waiting for the scan results
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScanView(), // open the can view
+                    builder: (context) => ScanView(), // open the scan view
                   ),
                 );
 
                 if (results != null) {
                   setState(() {
-                    data = results;
+                    result = results;
                   });
                 }
               },
               child: Text("扫码/tap to scan"),
             ),
-            Text(data), // display the scan results
+            Text(result), // display the scan results
           ],
         ),
       ),

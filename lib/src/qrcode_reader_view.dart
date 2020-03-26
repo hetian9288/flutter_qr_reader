@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import './qrcode_reader_controller.dart';
+import 'qrcode_reader_controller.dart';
 import 'package:flutter/scheduler.dart';
 
 /// 使用前需已经获取相关权限
@@ -49,9 +49,6 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       bool isOk = await getPermissionOfCamera();
       if (isOk) {
-//        _initAnimation();
-//        startScan();
-//        _upState();
         setState(() {
           hasCameraPermission = true;
         });
@@ -138,7 +135,6 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     Map<PermissionGroup, PermissionStatus> permissions =
         await PermissionHandler().requestPermissions([PermissionGroup.storage]);
     if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
-      print('entering picking image');
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
       if (image == null) {
         startScan();
@@ -220,7 +216,11 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                       alignment: Alignment.center,
                       child: DefaultTextStyle(
                         style: TextStyle(color: Colors.white),
-                        child: widget.helpWidget ?? Text("请将二维码置于方框中"),
+                        child: widget.helpWidget ??
+                            Text(
+                              "请将二维码置于方框中 \n please place the code inside the frame",
+                              textAlign: TextAlign.center,
+                            ),
                       ),
                     ),
                   ),
@@ -246,23 +246,24 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                         : 12,
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: <Widget>[
-                        SizedBox(width: 45, height: 45),
-                        SizedBox(width: 80, height: 80),
-                        GestureDetector(
-                          behavior: HitTestBehavior.translucent,
-                          onTap: _scanImage,
-                          child: Container(
-                            width: 45,
-                            height: 45,
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              "assets/tool_img.png",
-                              package: "super_qr_reader",
-                              width: 25,
-                              height: 25,
-                              color: Colors.white54,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 32),
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: _scanImage,
+                            child: Container(
+                              width: 45,
+                              height: 45,
+                              alignment: Alignment.center,
+                              child: Image.asset(
+                                "assets/tool_img.png",
+                                package: "super_qr_reader",
+                                width: 25,
+                                height: 25,
+                                color: Colors.white54,
+                              ),
                             ),
                           ),
                         ),
