@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
-import 'package:flutter_qr_reader_example/scanViewDemo.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:super_qr_reader/qrcode_reader_controller.dart';
+import 'package:super_qr_reader/qrcode_reader_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,9 +33,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  QrReaderViewController _controller;
   bool isOk = false;
-  String data;
+  String data = '';
+
+  var scanResult;
   @override
   void initState() {
     super.initState();
@@ -46,90 +48,83 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Plugin example app'),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            FlatButton(
+            RaisedButton(
               onPressed: () async {
                 Map<PermissionGroup, PermissionStatus> permissions =
-                    await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+                    await PermissionHandler()
+                        .requestPermissions([PermissionGroup.camera]);
                 print(permissions);
-                if (permissions[PermissionGroup.camera] == PermissionStatus.granted) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: Text("ok"),
-                      );
-                    },
-                  );
-                  setState(() {
-                    isOk = true;
-                  });
+
+                if (permissions[PermissionGroup.camera] ==
+                    PermissionStatus.granted) {
+                  isOk = true;
+                } else {
+                  isOk = false;
                 }
-              },
-              child: Text("请求权限"),
-              color: Colors.blue,
-            ),
-            FlatButton(
-              onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanViewDemo()));
+                if (isOk) {
+                  print('permission granted');
+                  String results = await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ScanViewDemo()));
+
+                  if (results != null) {
+                    setState(() {
+                      data = results;
+                    });
+                  }
+                } else {
+                  print('no permissions!!!!!!!');
+                }
               },
               child: Text("独立UI"),
             ),
-            FlatButton(
-                onPressed: () async {
-                  var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                  if (image == null) return;
-                  final rest = await FlutterQrReader.imgScan(image);
-                  setState(() {
-                    data = rest;
-                  });
-                },
-                child: Text("识别图片")),
-            FlatButton(
-                onPressed: () {
-                  assert(_controller != null);
-                  _controller.setFlashlight();
-                },
-                child: Text("切换闪光灯")),
-            FlatButton(
-                onPressed: () {
-                  assert(_controller != null);
-                  _controller.startCamera(onScan);
-                },
-                child: Text("开始扫码（暂停后）")),
-            if (data != null) Text(data),
-            if (isOk)
-              Container(
-                width: 320,
-                height: 350,
-                child: QrReaderView(
-                  width: 320,
-                  height: 350,
-                  callback: (container) {
-                    this._controller = container;
-                    _controller.startCamera(onScan);
-                  },
-                ),
-              )
+            Text(data),
           ],
         ),
       ),
     );
   }
+}
 
-  void onScan(String v, List<Offset> offsets) {
-    print([v, offsets]);
-    setState(() {
-      data = v;
-    });
-    _controller.stopCamera();
+class ScanViewDemo extends StatefulWidget {
+  ScanViewDemo({Key key}) : super(key: key);
+
+  @override
+  _ScanViewDemoState createState() => new _ScanViewDemoState();
+}
+
+class _ScanViewDemoState extends State<ScanViewDemo> {
+  GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      body: QrcodeReaderView(
+        key: _key,
+        onScan: onScan,
+        headerWidget: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+        ),
+      ),
+    );
+  }
+
+  Future onScan(String data) async {
+    Navigator.of(context).pop(data);
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 }

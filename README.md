@@ -1,12 +1,9 @@
-# flutter_qr_reader
+*This is a forked package from @hetian9288*
+
+# super_qr_reader
 
 QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
-## DEMO
-
-![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/Screenshot_20190608-153849.jpg?raw=true)
-
-![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/ezgif-3-7c8bfe5fd68a.gif?raw=true)
 
 ## Getting Started
 
