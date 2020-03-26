@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:super_qr_reader/qrcode_reader_controller.dart';
-import 'package:super_qr_reader/qrcode_reader_view.dart';
+import 'package:super_qr_reader/scan_view.dart';
 
 void main() => runApp(MyApp());
 
@@ -59,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                 String results = await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ScanViewDemo(),
+                    builder: (context) => ScanView(),
                   ),
                 );
 
@@ -79,40 +77,35 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class ScanViewDemo extends StatefulWidget {
-  ScanViewDemo({Key key}) : super(key: key);
-
-  @override
-  _ScanViewDemoState createState() => new _ScanViewDemoState();
-}
-
-class _ScanViewDemoState extends State<ScanViewDemo> {
-  GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      body: QrcodeReaderView(
-        key: _key,
-        onScan: onScan,
-        headerWidget: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-        ),
-      ),
-    );
-  }
-
-  Future onScan(String data) async {
-    Navigator.of(context).pop(data);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-}
+//class ScanViewDemo extends StatefulWidget {
+//  ScanViewDemo({Key key}) : super(key: key);
+//
+//  @override
+//  _ScanViewDemoState createState() => new _ScanViewDemoState();
+//}
+//
+//class _ScanViewDemoState extends State<ScanViewDemo> {
+//  GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
+//  @override
+//  void initState() {
+//    super.initState();
+//  }
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return new Scaffold(
+//      body: QrcodeReaderView(
+//        key: _key,
+//        onScan: onScan,
+//        headerWidget: AppBar(
+//          backgroundColor: Colors.transparent,
+//          elevation: 0.0,
+//        ),
+//      ),
+//    );
+//  }
+//
+//  Future onScan(String data) async {
+//    Navigator.of(context).pop(data);
+//  }
+//}
