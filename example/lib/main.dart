@@ -56,8 +56,12 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                String results = await Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ScanViewDemo()));
+                String results = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScanViewDemo(),
+                  ),
+                );
 
                 if (results != null) {
                   setState(() {
