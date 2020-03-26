@@ -56,29 +56,38 @@ class _HomePageState extends State<HomePage> {
           children: <Widget>[
             RaisedButton(
               onPressed: () async {
-                Map<PermissionGroup, PermissionStatus> permissions =
-                    await PermissionHandler()
-                        .requestPermissions([PermissionGroup.camera]);
-                print(permissions);
+//                Map<PermissionGroup, PermissionStatus> permissions =
+//                    await PermissionHandler()
+//                        .requestPermissions([PermissionGroup.camera]);
+//                print(permissions);
+//
+//                if (permissions[PermissionGroup.camera] ==
+//                    PermissionStatus.granted) {
+//                  isOk = true;
+//                } else {
+//                  isOk = false;
+//                }
+//                if (isOk) {
+//                  print('permission granted');
+//                  String results = await Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => ScanViewDemo()));
+//
+//                  if (results != null) {
+//                    setState(() {
+//                      data = results;
+//                    });
+//                  }
+//                } else {
+//                  print('no permissions!!!!!!!');
+//                }
 
-                if (permissions[PermissionGroup.camera] ==
-                    PermissionStatus.granted) {
-                  isOk = true;
-                } else {
-                  isOk = false;
-                }
-                if (isOk) {
-                  print('permission granted');
-                  String results = await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ScanViewDemo()));
+                String results = await Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ScanViewDemo()));
 
-                  if (results != null) {
-                    setState(() {
-                      data = results;
-                    });
-                  }
-                } else {
-                  print('no permissions!!!!!!!');
+                if (results != null) {
+                  setState(() {
+                    data = results;
+                  });
                 }
               },
               child: Text("独立UI"),

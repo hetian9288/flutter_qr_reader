@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import './qrcode_reader_controller.dart';
+import 'package:flutter/scheduler.dart';
 
 /// 使用前需已经获取相关权限
 /// Relevant privileges must be obtained before use
@@ -38,11 +39,34 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
   AnimationController _animationController;
   bool openFlashlight;
   Timer _timer;
+  bool hasCameraPermission = false;
   @override
   void initState() {
     super.initState();
     openFlashlight = false;
     _initAnimation();
+
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      bool isOk = await getPermissionOfCamera();
+      if (isOk) {
+//        _initAnimation();
+//        startScan();
+//        _upState();
+        setState(() {
+          hasCameraPermission = true;
+        });
+      } else {
+        Navigator.of(context).pop('无权访问摄像头');
+      }
+    });
+  }
+
+  Future<bool> getPermissionOfCamera() async {
+    Map<PermissionGroup, PermissionStatus> permissions =
+        await PermissionHandler().requestPermissions([PermissionGroup.camera]);
+    print(permissions);
+
+    return permissions[PermissionGroup.camera] == PermissionStatus.granted;
   }
 
   void _initAnimation() {
@@ -126,120 +150,128 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     }
   }
 
+  final flashOpen = Image.asset(
+    "assets/tool_flashlight_open.png",
+    package: "super_qr_reader",
+    width: 35,
+    height: 35,
+    color: Colors.white,
+  );
+  final flashClose = Image.asset(
+    "assets/tool_flashlight_close.png",
+    package: "super_qr_reader",
+    width: 35,
+    height: 35,
+    color: Colors.white,
+  );
+
   @override
   Widget build(BuildContext context) {
-    final flashOpen = Image.asset(
-      "assets/tool_flashlight_open.png",
-      package: "flutter_qr_reader",
-      width: 35,
-      height: 35,
-      color: Colors.white,
-    );
-    final flashClose = Image.asset(
-      "assets/tool_flashlight_close.png",
-      package: "flutter_qr_reader",
-      width: 35,
-      height: 35,
-      color: Colors.white,
-    );
-    return Material(
-      color: Colors.black,
-      child: LayoutBuilder(builder: (context, constraints) {
-        final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
-        final mediaQuery = MediaQuery.of(context);
-        if (constraints.maxHeight < qrScanSize * 1.5) {
-          print("建议高度与扫码区域高度比大于1.5");
-        }
-        return Stack(
-          children: <Widget>[
-            SizedBox(
-              width: constraints.maxWidth,
-              height: constraints.maxHeight,
-              child: QrReaderView(
-                width: constraints.maxWidth,
-                height: constraints.maxHeight,
-                callback: _onCreateController,
-              ),
+    return !hasCameraPermission
+        ? Material(
+            color: Colors.black,
+            child: Container(
+              color: Colors.black,
             ),
-            if (widget.headerWidget != null) widget.headerWidget,
-            Positioned(
-              left: (constraints.maxWidth - qrScanSize) / 2,
-              top: (constraints.maxHeight - qrScanSize) * 0.333333,
-              child: CustomPaint(
-                painter: QrScanBoxPainter(
-                  boxLineColor: widget.boxLineColor,
-                  animationValue: _animationController?.value ?? 0,
-                  isForward:
-                      _animationController?.status == AnimationStatus.forward,
-                ),
-                child: SizedBox(
-                  width: qrScanSize,
-                  height: qrScanSize,
-                ),
-              ),
-            ),
-            Positioned(
-              top: (constraints.maxHeight - qrScanSize) * 0.333333 +
-                  qrScanSize +
-                  24,
-              width: constraints.maxWidth,
-              child: Align(
-                alignment: Alignment.center,
-                child: DefaultTextStyle(
-                  style: TextStyle(color: Colors.white),
-                  child: widget.helpWidget ?? Text("请将二维码置于方框中"),
-                ),
-              ),
-            ),
-            Positioned(
-              top: (constraints.maxHeight - qrScanSize) * 0.333333 +
-                  qrScanSize -
-                  12 -
-                  35,
-              width: constraints.maxWidth,
-              child: Align(
-                alignment: Alignment.center,
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: setFlashlight,
-                  child: openFlashlight ? flashOpen : flashClose,
-                ),
-              ),
-            ),
-            Positioned(
-              width: constraints.maxWidth,
-              bottom: constraints.maxHeight == mediaQuery.size.height
-                  ? 12 + mediaQuery.padding.top
-                  : 12,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          )
+        : Material(
+            color: Colors.black,
+            child: LayoutBuilder(builder: (context, constraints) {
+              final qrScanSize = constraints.maxWidth * widget.scanBoxRatio;
+              final mediaQuery = MediaQuery.of(context);
+              if (constraints.maxHeight < qrScanSize * 1.5) {
+                print("建议高度与扫码区域高度比大于1.5");
+              }
+              return Stack(
                 children: <Widget>[
-                  SizedBox(width: 45, height: 45),
-                  SizedBox(width: 80, height: 80),
-                  GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    onTap: _scanImage,
-                    child: Container(
-                      width: 45,
-                      height: 45,
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        "assets/tool_img.png",
-                        package: "flutter_qr_reader",
-                        width: 25,
-                        height: 25,
-                        color: Colors.white54,
+                  SizedBox(
+                    width: constraints.maxWidth,
+                    height: constraints.maxHeight,
+                    child: QrReaderView(
+                      width: constraints.maxWidth,
+                      height: constraints.maxHeight,
+                      callback: _onCreateController,
+                    ),
+                  ),
+                  if (widget.headerWidget != null) widget.headerWidget,
+                  Positioned(
+                    left: (constraints.maxWidth - qrScanSize) / 2,
+                    top: (constraints.maxHeight - qrScanSize) * 0.333333,
+                    child: CustomPaint(
+                      painter: QrScanBoxPainter(
+                        boxLineColor: widget.boxLineColor,
+                        animationValue: _animationController?.value ?? 0,
+                        isForward: _animationController?.status ==
+                            AnimationStatus.forward,
+                      ),
+                      child: SizedBox(
+                        width: qrScanSize,
+                        height: qrScanSize,
                       ),
                     ),
                   ),
+                  Positioned(
+                    top: (constraints.maxHeight - qrScanSize) * 0.333333 +
+                        qrScanSize +
+                        24,
+                    width: constraints.maxWidth,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: DefaultTextStyle(
+                        style: TextStyle(color: Colors.white),
+                        child: widget.helpWidget ?? Text("请将二维码置于方框中"),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: (constraints.maxHeight - qrScanSize) * 0.333333 +
+                        qrScanSize -
+                        12 -
+                        35,
+                    width: constraints.maxWidth,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: setFlashlight,
+                        child: openFlashlight ? flashOpen : flashClose,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    width: constraints.maxWidth,
+                    bottom: constraints.maxHeight == mediaQuery.size.height
+                        ? 12 + mediaQuery.padding.top
+                        : 12,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        SizedBox(width: 45, height: 45),
+                        SizedBox(width: 80, height: 80),
+                        GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: _scanImage,
+                          child: Container(
+                            width: 45,
+                            height: 45,
+                            alignment: Alignment.center,
+                            child: Image.asset(
+                              "assets/tool_img.png",
+                              package: "super_qr_reader",
+                              width: 25,
+                              height: 25,
+                              color: Colors.white54,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
-              ),
-            )
-          ],
-        );
-      }),
-    );
+              );
+            }),
+          );
   }
 
   @override
