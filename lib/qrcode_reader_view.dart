@@ -56,7 +56,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
           hasCameraPermission = true;
         });
       } else {
-        Navigator.of(context).pop('无权访问摄像头');
+        Navigator.of(context)
+            .pop('无权访问摄像头/No permissions to access the camera');
       }
     });
   }

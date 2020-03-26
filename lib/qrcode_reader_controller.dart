@@ -8,14 +8,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class FlutterQrReader {
-  static const MethodChannel _channel = const MethodChannel('me.hetian.flutter_qr_reader');
+  static const MethodChannel _channel =
+      const MethodChannel('me.hetian.flutter_qr_reader');
 
   static Future<String> imgScan(File file) async {
     if (file?.existsSync() == false) {
       return null;
     }
     try {
-      final rest = await _channel.invokeMethod("imgQrCode", {"file": file.path});
+      final rest =
+          await _channel.invokeMethod("imgQrCode", {"file": file.path});
       return rest;
     } catch (e) {
       print(e);
@@ -65,7 +67,9 @@ class _QrReaderViewState extends State<QrReaderView> {
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
         gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-          new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer()),
+          new Factory<OneSequenceGestureRecognizer>(
+            () => new EagerGestureRecognizer(),
+          ),
         ].toSet(),
       );
     } else if (defaultTargetPlatform == TargetPlatform.iOS) {
@@ -80,7 +84,9 @@ class _QrReaderViewState extends State<QrReaderView> {
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
         gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
-          new Factory<OneSequenceGestureRecognizer>(() => new EagerGestureRecognizer()),
+          new Factory<OneSequenceGestureRecognizer>(
+            () => new EagerGestureRecognizer(),
+          ),
         ].toSet(),
       );
     } else {
@@ -89,7 +95,9 @@ class _QrReaderViewState extends State<QrReaderView> {
   }
 
   void _onPlatformViewCreated(int id) {
-    widget.callback(QrReaderViewController(id));
+    widget.callback(
+      QrReaderViewController(id),
+    );
   }
 
   @override
@@ -103,7 +111,9 @@ typedef ReadChangeBack = void Function(String, List<Offset>);
 class QrReaderViewController {
   final int id;
   final MethodChannel _channel;
-  QrReaderViewController(this.id) : _channel = MethodChannel('me.hetian.flutter_qr_reader.reader_view_$id') {
+  QrReaderViewController(this.id)
+      : _channel =
+            MethodChannel('me.hetian.flutter_qr_reader.reader_view_$id') {
     _channel.setMethodCallHandler(_handleMessages);
   }
   ReadChangeBack onQrBack;
@@ -116,7 +126,12 @@ class QrReaderViewController {
           final pointsStrs = call.arguments["points"];
           for (String point in pointsStrs) {
             final a = point.split(",");
-            points.add(Offset(double.tryParse(a.first), double.tryParse(a.last)));
+            points.add(
+              Offset(
+                double.tryParse(a.first),
+                double.tryParse(a.last),
+              ),
+            );
           }
         }
 
