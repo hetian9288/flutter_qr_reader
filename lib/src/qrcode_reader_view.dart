@@ -60,11 +60,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
   }
 
   Future<bool> getPermissionOfCamera() async {
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.camera]);
-    print(permissions);
-
-    return permissions[PermissionGroup.camera] == PermissionStatus.granted;
+    PermissionStatus status = await Permission.camera.request();
+    return status == PermissionStatus.granted;
   }
 
   void _initAnimation() {
@@ -132,9 +129,8 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
 
   Future _scanImage() async {
     stopScan();
-    Map<PermissionGroup, PermissionStatus> permissions =
-        await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-    if (permissions[PermissionGroup.storage] == PermissionStatus.granted) {
+    PermissionStatus status = await Permission.camera.request();
+    if (status == PermissionStatus.granted) {
       var image = await ImagePicker.pickImage(source: ImageSource.gallery);
       if (image == null) {
         startScan();
