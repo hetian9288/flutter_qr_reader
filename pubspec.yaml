@@ -1,6 +1,6 @@
 name: super_qr_reader
 description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
-version: 1.0.1
+version: 2.0.0
 authors: ['Benjamin Li<jijileeeeeee@gmail.com>', 'Peter Guo<1448373124@qq.com>']
 homepage: https://github.com/SeasonLeee/super_qr_reader
 

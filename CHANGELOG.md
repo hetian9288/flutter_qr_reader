@@ -13,3 +13,8 @@
 *3-26-2020*
 - delete some useless code to reduce size.
 - refactor the export content structure.
+
+## 2.0.0
+
+*3-30-2020*
+- upgrade dependent package permission_handler to latest
