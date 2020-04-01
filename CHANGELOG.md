@@ -1,28 +1,20 @@
-## 0.0.1
+## 0.0.1 
 
-## 0.0.2
+*3-25-2020*
+- modify original library to meet our business requirement.
 
-增加内置UI
+## 1.0.0 
 
-## 0.0.3
-
-## 0.0.4
-
-## 0.0.5
-
-## 1.0.0
-
-## 1.0.0+1
+*3-26-2020*
+- improve dependencies version and make the package to release version.
 
 ## 1.0.1
 
-修改扫码后的操作
+*3-26-2020*
+- delete some useless code to reduce size.
+- refactor the export content structure.
 
-## 1.0.2
+## 2.0.0
 
-降低zxing版本至3.3.3
-
-## 1.0.3
-
-解决scanBoxRatio无效问题
-
+*3-30-2020*
+- upgrade dependent package permission_handler to latest

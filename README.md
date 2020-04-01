@@ -1,33 +1,71 @@
-# flutter_qr_reader
+*This is a forked package from @hetian9288*
+
+# super_qr_reader
 
 QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
 
-## DEMO
+# features:
+- place the code inside the square frame to get the information from QR code
+- select QR code from your local library from the image picker inside the ScanView
 
-![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/Screenshot_20190608-153849.jpg?raw=true)
-
-![demo](https://github.com/hetian9288/flutter_qr_reader/blob/master/ezgif-3-7c8bfe5fd68a.gif?raw=true)
 
 ## Getting Started
 
-``` dart
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+```dart
+import 'package:super_qr_reader/scan_view.dart';
 
-// 识别图片
-final String data = await FlutterQrReader.imgScan(File);
+class HomePage extends StatefulWidget {
+  HomePage({Key key}) : super(key: key);
 
-// 嵌入视图
-QrReaderView(
-  width: 320,
-  height: 350,
-  callback: (container) {},
-)
-// 打开手电筒
-..setFlashlight
-// 开始扫码
-..startCamera
-// 结束扫码
-..stopCamera
+  @override
+  _HomePageState createState() => new _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String result = '';
+
+  var scanResult;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Package example app'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            RaisedButton(
+              onPressed: () async {
+                String results = await Navigator.push( // waiting for the scan results
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScanView(), // open the scan view
+                  ),
+                );
+
+                if (results != null) {
+                  setState(() {
+                    result = results;
+                  });
+                }
+              },
+              child: Text("扫码/tap to scan"),
+            ),
+            Text(result), // display the scan results
+          ],
+        ),
+      ),
+    );
+  }
+} 
 ```
 
 ### For IOS
@@ -42,33 +80,3 @@ And you will need provide the description of camera's permission to work properl
 	<string>The porpuse explaining why you will use the camera</string>
 ```
 
-## Built-in UI
-
-``` dart
-Widget build(BuildContext context) {
-    return new Scaffold(
-      body: QrcodeReaderView(key: qrViewKey, onScan: onScan),
-    );
-}
-
-GlobalKey<QrcodeReaderViewState> qrViewKey = GlobalKey();
-
-Future onScan(String data) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (context) {
-        return CupertinoAlertDialog(
-          title: Text("扫码结果"),
-          content: Text(data),
-          actions: <Widget>[
-            CupertinoDialogAction(
-              child: Text("确认"),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        );
-      },
-    );
-    qrViewKey.currentState.startScan();
-}
-```

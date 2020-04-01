@@ -1,8 +1,8 @@
-name: flutter_qr_reader
+name: super_qr_reader
 description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
-version: 1.0.3
-author: 王贺天<hetian@hetian.me>
-homepage: https://github.com/hetian9288/flutter_qr_reader
+version: 2.0.0
+authors: ['Benjamin Li<jijileeeeeee@gmail.com>', 'Peter Guo<1448373124@qq.com>']
+homepage: https://github.com/SeasonLeee/super_qr_reader
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   image_picker: ^0.6.0+9
+  permission_handler: ^5.0.0
 
 dev_dependencies:
   flutter_test:

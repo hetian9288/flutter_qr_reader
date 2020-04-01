@@ -1,4 +1,4 @@
-name: flutter_qr_reader_example
+name: super_qr_reader_example
 description: Demonstrates how to use the flutter_qr_reader plugin.
 publish_to: 'none'
 
@@ -12,15 +12,15 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  permission_handler: '^3.0.0'
+  permission_handler: ^5.0.0
   image_picker: ^0.6.0+9
+  super_qr_reader:
+    path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_qr_reader:
-    path: ../
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -1,6 +1,6 @@
-# flutter_qr_reader_example
+# super_qr_reader_example
 
-Demonstrates how to use the flutter_qr_reader plugin.
+Demonstrates how to use the super_qr_reader package.
 
 ## Getting Started
 

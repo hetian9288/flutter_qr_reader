@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
-import 'package:flutter_qr_reader_example/scanViewDemo.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:super_qr_reader/super_qr_reader.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(home: HomePage());
@@ -32,9 +21,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  QrReaderViewController _controller;
-  bool isOk = false;
-  String data;
+  String result = '';
+
   @override
   void initState() {
     super.initState();
@@ -44,92 +32,35 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Plugin example app'),
+        title: const Text('Package example app'),
       ),
-      body: SingleChildScrollView(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            FlatButton(
+            RaisedButton(
               onPressed: () async {
-                Map<PermissionGroup, PermissionStatus> permissions =
-                    await PermissionHandler().requestPermissions([PermissionGroup.camera]);
-                print(permissions);
-                if (permissions[PermissionGroup.camera] == PermissionStatus.granted) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return Dialog(
-                        child: Text("ok"),
-                      );
-                    },
-                  );
+                String results = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScanView(),
+                  ),
+                );
+
+                if (results != null) {
                   setState(() {
-                    isOk = true;
+                    result = results;
                   });
                 }
               },
-              child: Text("请求权限"),
-              color: Colors.blue,
+              child: Text("扫码/tap to scan"),
             ),
-            FlatButton(
-              onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanViewDemo()));
-              },
-              child: Text("独立UI"),
-            ),
-            FlatButton(
-                onPressed: () async {
-                  var image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                  if (image == null) return;
-                  final rest = await FlutterQrReader.imgScan(image);
-                  setState(() {
-                    data = rest;
-                  });
-                },
-                child: Text("识别图片")),
-            FlatButton(
-                onPressed: () {
-                  assert(_controller != null);
-                  _controller.setFlashlight();
-                },
-                child: Text("切换闪光灯")),
-            FlatButton(
-                onPressed: () {
-                  assert(_controller != null);
-                  _controller.startCamera(onScan);
-                },
-                child: Text("开始扫码（暂停后）")),
-            if (data != null) Text(data),
-            if (isOk)
-              Container(
-                width: 320,
-                height: 350,
-                child: QrReaderView(
-                  width: 320,
-                  height: 350,
-                  callback: (container) {
-                    this._controller = container;
-                    _controller.startCamera(onScan);
-                  },
-                ),
-              )
+            Text(result),
           ],
         ),
       ),
     );
-  }
-
-  void onScan(String v, List<Offset> offsets) {
-    print([v, offsets]);
-    setState(() {
-      data = v;
-    });
-    _controller.stopCamera();
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 }

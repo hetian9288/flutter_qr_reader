@@ -1,0 +1,1 @@
+{"_info":"// This is a generated file; do not edit or check into version control.","dependencyGraph":[{"name":"flutter_plugin_android_lifecycle","dependencies":[]},{"name":"image_picker","dependencies":["flutter_plugin_android_lifecycle"]},{"name":"permission_handler","dependencies":[]},{"name":"super_qr_reader","dependencies":["image_picker","permission_handler"]}]}
