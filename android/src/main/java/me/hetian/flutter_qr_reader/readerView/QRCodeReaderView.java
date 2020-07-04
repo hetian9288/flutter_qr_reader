@@ -32,10 +32,13 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
+import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
@@ -43,9 +46,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
-import com.google.zxing.client.android.camera.CameraManager;
-
 import static android.hardware.Camera.getCameraInfo;
+import static me.hetian.flutter_qr_reader.QRCodeDecoder.HINTS;
 
 /**
  * QRCodeReaderView Class which uses ZXING lib and let you easily integrate a QR decoder view.
@@ -374,7 +376,20 @@ public class QRCodeReaderView extends SurfaceView
             } catch (ChecksumException e) {
                 SimpleLog.d(TAG, "ChecksumException", e);
             } catch (NotFoundException e) {
-                SimpleLog.d(TAG, "No QR Code found");
+                MultiFormatReader multiFormatReader = new MultiFormatReader();
+                try {
+                    SimpleLog.d(TAG, "No QR Code found");
+
+                    LuminanceSource invertedSource = source.invert();
+                    BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(invertedSource));
+
+                    return multiFormatReader.decode(binaryBitmap, HINTS);
+                } catch (NotFoundException exception) {
+                    SimpleLog.d(TAG, "No Inverted QR Code found");
+                    return null;
+                } finally {
+                    multiFormatReader.reset();
+                }
             } catch (FormatException e) {
                 SimpleLog.d(TAG, "FormatException", e);
             } finally {

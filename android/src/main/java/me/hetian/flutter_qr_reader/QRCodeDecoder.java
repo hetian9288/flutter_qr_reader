@@ -2,18 +2,17 @@ package me.hetian.flutter_qr_reader;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.DecodeHintType;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Result;
+import android.util.Log;
+import com.google.zxing.*;
 import com.google.zxing.common.GlobalHistogramBinarizer;
 import com.google.zxing.common.HybridBinarizer;
 import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+
+import me.hetian.flutter_qr_reader.readerView.SimpleLog;
+
 /**
  * 描述:解析二维码图片
  */
@@ -71,13 +70,26 @@ public class QRCodeDecoder {
             result = new MultiFormatReader().decode(new BinaryBitmap(new HybridBinarizer(source)), HINTS);
             return result.getText();
         } catch (Exception e) {
-            e.printStackTrace();
             if (source != null) {
                 try {
                     result = new MultiFormatReader().decode(new BinaryBitmap(new GlobalHistogramBinarizer(source)), HINTS);
                     return result.getText();
                 } catch (Throwable e2) {
-                    e2.printStackTrace();
+                    MultiFormatReader multiFormatReader = new MultiFormatReader();
+                    try {
+                        LuminanceSource invertedSource = source.invert();
+                        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(invertedSource));
+
+                        result = multiFormatReader.decode(binaryBitmap, HINTS);
+                        return result.getText();
+                    } catch (NotFoundException exception) {
+                        e.printStackTrace();
+                        e2.printStackTrace();
+                        exception.printStackTrace();
+                        return null;
+                    } finally {
+                        multiFormatReader.reset();
+                    }
                 }
             }
             return null;
@@ -102,6 +114,7 @@ public class QRCodeDecoder {
             options.inJustDecodeBounds = false;
             return BitmapFactory.decodeFile(picturePath, options);
         } catch (Exception e) {
+            Log.d("QR", "NOT FOUND INVERTED");
             return null;
         }
     }
