@@ -18,3 +18,8 @@
 
 *3-30-2020*
 - upgrade dependent package permission_handler to latest
+
+## 2.0.1
+
+*10-21-2020*
+- fix `podspec` name for the package

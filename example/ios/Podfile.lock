@@ -1,34 +1,40 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_qr_reader (0.0.1):
+  - flutter_plugin_android_lifecycle (0.0.1):
     - Flutter
   - image_picker (0.0.1):
     - Flutter
-  - permission_handler (3.1.0):
+  - permission_handler (5.0.0):
+    - Flutter
+  - super_qr_reader (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
-  - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - super_qr_reader (from `.symlinks/plugins/super_qr_reader/ios`)
 
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
-  flutter_qr_reader:
-    :path: ".symlinks/plugins/flutter_qr_reader/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  super_qr_reader:
+    :path: ".symlinks/plugins/super_qr_reader/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
-  flutter_qr_reader: cb791fdc527672537c644b2080196237bac85dfa
-  image_picker: 86b84c4fe89267356a1f17297a45b5d317ebd2e7
-  permission_handler: a1b8c0f8c83b4e7201f9c04b9aef09979cc97f60
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
+  super_qr_reader: 22b11cbfd8eb8360ad9082334326068c01ac7754
 
 PODFILE CHECKSUM: e8988baac3a50f787b9d3ed7ca44957b442f92a7
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.9.3
