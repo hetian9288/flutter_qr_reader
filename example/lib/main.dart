@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -30,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void alert(String tip) {
-    ScaffoldMessenger.of(scaffoldKey.currentContext).showSnackBar(SnackBar(content: Text(tip)));
+    scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(tip)));
   }
 
   void openScanUI(BuildContext context) async {
