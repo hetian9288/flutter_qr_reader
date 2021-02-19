@@ -23,3 +23,8 @@
 
 *10-21-2020*
 - fix `podspec` name for the package
+
+## 2.0.2
+
+*10-21-2020*
+- fix the package is not available on iOS by fixing the plugin section in pubspec.yaml

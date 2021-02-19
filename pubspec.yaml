@@ -1,6 +1,6 @@
 name: super_qr_reader
 description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
-version: 2.0.1
+version: 2.0.2
 authors: ['Benjamin Li<jijileeeeeee@gmail.com>', 'Peter Guo<1448373124@qq.com>']
 homepage: https://github.com/SeasonLeee/super_qr_reader
 
@@ -31,8 +31,9 @@ flutter:
     platforms:
       android:
         package: me.hetian.flutter_qr_reader
+        pluginClass: FlutterQrReaderPlugin
       ios:
-        pluginClass: HelloPlugin
+        pluginClass: FlutterQrReaderPlugin
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
