@@ -5,7 +5,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:super_qr_reader/src/qrcode_reader_view.dart';
 
 class ScanView extends StatefulWidget {
-  ScanView({Key key}) : super(key: key);
+  final bool hasHintText;
+
+  final String centeredText;
+
+  /// default style for the centered text is
+  /// color: white
+  /// fontSize: 16
+  final TextStyle centeredTextStyle;
+
+  /// default alignment for the centered text is
+  /// TextAlign.center
+  final TextAlign centeredTextAlignment;
+
+  final bool hasLightSwitch;
+
+  ScanView({
+    Key key,
+    this.hasHintText,
+    this.centeredText,
+    this.centeredTextStyle,
+    this.centeredTextAlignment,
+    this.hasLightSwitch,
+  }) : super(key: key);
 
   @override
   _ScanViewState createState() => new _ScanViewState();
@@ -23,9 +45,9 @@ class _ScanViewState extends State<ScanView> {
     return new Scaffold(
       body: QrcodeReaderView(
         key: _key,
-        hasHintText: false,
-        hasLightSwitch: false,
-        centeredText: 'QRCode address:\n http://wwww.something.com',
+        hasHintText: widget.hasHintText,
+        hasLightSwitch: widget.hasLightSwitch,
+        centeredText: widget.centeredText,
         onScan: onScan,
         headerWidget: AppBar(
           backgroundColor: Colors.transparent,

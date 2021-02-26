@@ -35,3 +35,8 @@
 - add the ability to remove hint text below the scan frame
 - add the ability to remove light switch button
 - add the ability to add hint new text at the centered of the scan frame(centeredText)
+
+## 2.1.1
+
+*02-26-2021*
+expose the new ability api...
