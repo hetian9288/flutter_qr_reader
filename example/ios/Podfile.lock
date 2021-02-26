@@ -1,5 +1,5 @@
 PODS:
-  - Flutter (1.0.0)
+  - Flutter (1.22.4)
   - flutter_plugin_android_lifecycle (0.0.1):
     - Flutter
   - image_picker (0.0.1):
@@ -10,15 +10,16 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - Flutter (from `.symlinks/flutter/ios`)
   - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - super_qr_reader (from `.symlinks/plugins/super_qr_reader/ios`)
 
+SPEC REPOS:
+  trunk:
+    - Flutter
+
 EXTERNAL SOURCES:
-  Flutter:
-    :path: ".symlinks/flutter/ios"
   flutter_plugin_android_lifecycle:
     :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   image_picker:
@@ -29,7 +30,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/super_qr_reader/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  Flutter: d466195df8a9933b705cb82c53140202e097ec55
   flutter_plugin_android_lifecycle: 47de533a02850f070f5696a623995e93eddcdb9b
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
   permission_handler: c136c8d87d3438c7fad2754fe144e5f712c536b2
@@ -37,4 +38,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: e8988baac3a50f787b9d3ed7ca44957b442f92a7
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1

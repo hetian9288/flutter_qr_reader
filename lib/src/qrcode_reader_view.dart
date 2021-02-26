@@ -15,6 +15,22 @@ class QrcodeReaderView extends StatefulWidget {
   final double scanBoxRatio;
   final Color boxLineColor;
   final Widget helpWidget;
+
+  final bool hasHintText;
+
+  final String centeredText;
+
+  /// default style for the centered text is
+  /// color: white
+  /// fontSize: 16
+  final TextStyle centeredTextStyle;
+
+  /// default alignment for the centered text is
+  /// TextAlign.center
+  final TextAlign centeredTextAlignment;
+
+  final bool hasLightSwitch;
+
   QrcodeReaderView({
     Key key,
     @required this.onScan,
@@ -22,6 +38,11 @@ class QrcodeReaderView extends StatefulWidget {
     this.boxLineColor = Colors.cyanAccent,
     this.helpWidget,
     this.scanBoxRatio = 0.85,
+    this.hasHintText,
+    this.centeredText,
+    this.centeredTextStyle,
+    this.centeredTextAlignment,
+    this.hasLightSwitch,
   }) : super(key: key);
 
   @override
@@ -158,6 +179,10 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     color: Colors.white,
   );
 
+  bool hasCenteredText(String text) {
+    return text != null && text.isNotEmpty;
+  }
+
   @override
   Widget build(BuildContext context) {
     return !hasCameraPermission
@@ -203,38 +228,44 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: (constraints.maxHeight - qrScanSize) * 0.333333 +
-                        qrScanSize +
-                        24,
-                    width: constraints.maxWidth,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: DefaultTextStyle(
-                        style: TextStyle(color: Colors.white),
-                        child: widget.helpWidget ??
-                            Text(
-                              "请将二维码置于方框中 \n please place the code inside the frame",
-                              textAlign: TextAlign.center,
-                            ),
+                  if (widget.hasHintText ?? true)
+                    Positioned(
+                      top: (constraints.maxHeight - qrScanSize) * 0.333333 +
+                          qrScanSize +
+                          24,
+                      width: constraints.maxWidth,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: DefaultTextStyle(
+                          style: TextStyle(color: Colors.white),
+                          child: widget.helpWidget ??
+                              Text(
+                                "请将二维码置于方框中 \n please place the code inside the frame",
+                                textAlign: TextAlign.center,
+                              ),
+                        ),
                       ),
-                    ),
-                  ),
-                  Positioned(
-                    top: (constraints.maxHeight - qrScanSize) * 0.333333 +
-                        qrScanSize -
-                        12 -
-                        35,
-                    width: constraints.maxWidth,
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: setFlashlight,
-                        child: openFlashlight ? flashOpen : flashClose,
+                    )
+                  else
+                    Container(),
+                  if (widget.hasLightSwitch ?? true)
+                    Positioned(
+                      top: (constraints.maxHeight - qrScanSize) * 0.333333 +
+                          qrScanSize -
+                          12 -
+                          35,
+                      width: constraints.maxWidth,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: setFlashlight,
+                          child: openFlashlight ? flashOpen : flashClose,
+                        ),
                       ),
-                    ),
-                  ),
+                    )
+                  else
+                    Container(),
                   Positioned(
                     width: constraints.maxWidth,
                     bottom: constraints.maxHeight == mediaQuery.size.height
@@ -265,7 +296,23 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  if (hasCenteredText(widget.centeredText))
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.centeredText,
+                        style: widget.centeredTextStyle ??
+                            TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                        textAlign:
+                            widget.centeredTextAlignment ?? TextAlign.center,
+                      ),
+                    )
+                  else
+                    Container(),
                 ],
               );
             }),

@@ -1,12 +1,14 @@
 name: super_qr_reader
-description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
-version: 2.0.2
-authors: ['Benjamin Li<jijileeeeeee@gmail.com>', 'Peter Guo<1448373124@qq.com>']
+description: >-
+  This package allows user to read or get the data by scan or read QRCode
+  from other object(like wall) or the local image file.
+  This package is available thanks to @hetian9288's work.
+version: 2.1.0
 homepage: https://github.com/SeasonLeee/super_qr_reader
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
-  flutter: ">=1.10.0 <2.0.0"
+  flutter: ">=1.10.0"
 
 dependencies:
   flutter:

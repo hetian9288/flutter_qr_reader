@@ -28,3 +28,10 @@
 
 *10-21-2020*
 - fix the package is not available on iOS by fixing the plugin section in pubspec.yaml
+
+## 2.1.0
+
+*02-26-2021*
+- add the ability to remove hint text below the scan frame
+- add the ability to remove light switch button
+- add the ability to add hint new text at the centered of the scan frame(centeredText)

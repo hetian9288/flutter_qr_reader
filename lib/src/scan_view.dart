@@ -23,6 +23,9 @@ class _ScanViewState extends State<ScanView> {
     return new Scaffold(
       body: QrcodeReaderView(
         key: _key,
+        hasHintText: false,
+        hasLightSwitch: false,
+        centeredText: 'QRCode address:\n http://wwww.something.com',
         onScan: onScan,
         headerWidget: AppBar(
           backgroundColor: Colors.transparent,
