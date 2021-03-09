@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -152,12 +153,12 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
     stopScan();
     PermissionStatus status = await Permission.camera.request();
     if (status == PermissionStatus.granted) {
-      var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+      var image = await ImagePicker().getImage(source: ImageSource.gallery);
       if (image == null) {
         startScan();
         return;
       }
-      final rest = await FlutterQrReader.imgScan(image);
+      final rest = await FlutterQrReader.imgScan(File(image.path));
       await widget.onScan(rest);
     } else {
       startScan();

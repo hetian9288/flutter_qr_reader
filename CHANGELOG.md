@@ -40,3 +40,8 @@
 
 *02-26-2021*
 expose the new ability api...
+
+## 2.1.2
+
+*03-09-2021*
+upgrade dependency image_picker version

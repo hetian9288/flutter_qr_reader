@@ -13,7 +13,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   permission_handler: ^5.0.0
-  image_picker: ^0.6.0+9
+  image_picker: ^0.7.2
   super_qr_reader:
     path: ../
 

@@ -3,7 +3,7 @@ description: >-
   This package allows user to read or get the data by scan or read QRCode
   from other object(like wall) or the local image file.
   This package is available thanks to @hetian9288's work.
-version: 2.1.1
+version: 2.1.2
 homepage: https://github.com/SeasonLeee/super_qr_reader
 
 environment:
@@ -13,7 +13,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  image_picker: ^0.6.0+9
+  image_picker: ^0.7.2
   permission_handler: ^5.0.0
 
 dev_dependencies:
