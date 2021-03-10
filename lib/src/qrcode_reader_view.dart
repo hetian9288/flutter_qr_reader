@@ -32,6 +32,8 @@ class QrcodeReaderView extends StatefulWidget {
 
   final bool hasLightSwitch;
 
+  final bool hasImagePicker;
+
   QrcodeReaderView({
     Key key,
     @required this.onScan,
@@ -44,6 +46,7 @@ class QrcodeReaderView extends StatefulWidget {
     this.centeredTextStyle,
     this.centeredTextAlignment,
     this.hasLightSwitch,
+    this.hasImagePicker,
   }) : super(key: key);
 
   @override
@@ -267,37 +270,40 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                     )
                   else
                     Container(),
-                  Positioned(
-                    width: constraints.maxWidth,
-                    bottom: constraints.maxHeight == mediaQuery.size.height
-                        ? 12 + mediaQuery.padding.top
-                        : 12,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(right: 32),
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.translucent,
-                            onTap: _scanImage,
-                            child: Container(
-                              width: 45,
-                              height: 45,
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                "assets/tool_img.png",
-                                package: "super_qr_reader",
-                                width: 25,
-                                height: 25,
-                                color: Colors.white54,
+                  if (widget.hasImagePicker ?? true)
+                    Positioned(
+                      width: constraints.maxWidth,
+                      bottom: constraints.maxHeight == mediaQuery.size.height
+                          ? 12 + mediaQuery.padding.top
+                          : 12,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(right: 32),
+                            child: GestureDetector(
+                              behavior: HitTestBehavior.translucent,
+                              onTap: _scanImage,
+                              child: Container(
+                                width: 45,
+                                height: 45,
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  "assets/tool_img.png",
+                                  package: "super_qr_reader",
+                                  width: 25,
+                                  height: 25,
+                                  color: Colors.white54,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        ],
+                      ),
+                    )
+                  else
+                    Container(),
                   if (hasCenteredText(widget.centeredText))
                     Align(
                       alignment: Alignment.center,

@@ -45,3 +45,8 @@ expose the new ability api...
 
 *03-09-2021*
 upgrade dependency image_picker version
+
+## 2.1.3
+
+*03-10-2021*
+add the api to remove image picker button

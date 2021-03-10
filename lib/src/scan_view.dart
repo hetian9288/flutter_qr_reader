@@ -20,6 +20,8 @@ class ScanView extends StatefulWidget {
 
   final bool hasLightSwitch;
 
+  final bool hasImagePicker;
+
   ScanView({
     Key key,
     this.hasHintText,
@@ -27,6 +29,7 @@ class ScanView extends StatefulWidget {
     this.centeredTextStyle,
     this.centeredTextAlignment,
     this.hasLightSwitch,
+    this.hasImagePicker,
   }) : super(key: key);
 
   @override
@@ -49,6 +52,7 @@ class _ScanViewState extends State<ScanView> {
         hasLightSwitch: widget.hasLightSwitch,
         centeredText: widget.centeredText,
         onScan: onScan,
+        hasImagePicker: widget.hasImagePicker,
         headerWidget: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,

@@ -48,6 +48,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => ScanView(
                       hasLightSwitch: false,
                       hasHintText: false,
+                      hasImagePicker: false,
                     ),
                   ),
                 );

@@ -3,7 +3,7 @@ description: >-
   This package allows user to read or get the data by scan or read QRCode
   from other object(like wall) or the local image file.
   This package is available thanks to @hetian9288's work.
-version: 2.1.2
+version: 2.1.3
 homepage: https://github.com/SeasonLeee/super_qr_reader
 
 environment:
