@@ -1,6 +1,6 @@
 name: flutter_qr_reader
 description: QR code (scan QRCode and picture) recognition （AndroidView/UiKitView）
-version: 1.0.5-nullsafety.1
+version: 1.0.5
 homepage: https://github.com/hetian9288/flutter_qr_reader
 
 environment:
