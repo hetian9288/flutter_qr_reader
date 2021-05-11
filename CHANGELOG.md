@@ -50,3 +50,8 @@ upgrade dependency image_picker version
 
 *03-10-2021*
 add the api to remove image picker button
+
+## 2.1.4
+
+*05-11-2021*
+upgrade dependency permission_handler
