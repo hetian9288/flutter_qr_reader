@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <type id="android" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="IntelliJ IDEA IU-183.4588.61" project-jdk-type="IDEA JDK" />
   <component name="ProjectType">
     <option name="id" value="io.flutter" />
