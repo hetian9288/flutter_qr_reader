@@ -55,3 +55,9 @@ add the api to remove image picker button
 
 *05-11-2021*
 upgrade dependency permission_handler
+
+## 2.1.5
+
+*07-13-2021*
+- upgrade dependency image_picker
+- add the ability to remove scan view animation
