@@ -225,6 +225,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
                         animationValue: _animationController?.value ?? 0,
                         isForward: _animationController?.status ==
                             AnimationStatus.forward,
+                        showAnimation: false,
                       ),
                       child: SizedBox(
                         width: qrScanSize,
@@ -337,12 +338,14 @@ class QrScanBoxPainter extends CustomPainter {
   final double animationValue;
   final bool isForward;
   final Color boxLineColor;
+  final bool showAnimation;
 
-  QrScanBoxPainter(
-      {@required this.animationValue,
-      @required this.isForward,
-      this.boxLineColor})
-      : assert(animationValue != null),
+  QrScanBoxPainter({
+    @required this.animationValue,
+    @required this.isForward,
+    this.boxLineColor,
+    this.showAnimation,
+  })  : assert(animationValue != null),
         assert(isForward != null);
 
   @override
@@ -389,35 +392,37 @@ class QrScanBoxPainter extends CustomPainter {
     canvas.clipRRect(
         BorderRadius.all(Radius.circular(12)).toRRect(Offset.zero & size));
 
-    // 绘制横向网格
-    final linePaint = Paint();
-    final lineSize = size.height * 0.45;
-    final leftPress = (size.height + lineSize) * animationValue - lineSize;
-    linePaint.style = PaintingStyle.stroke;
-    linePaint.shader = LinearGradient(
-      colors: [Colors.transparent, boxLineColor],
-      begin: isForward ? Alignment.topCenter : Alignment(0.0, 2.0),
-      end: isForward ? Alignment(0.0, 0.5) : Alignment.topCenter,
-    ).createShader(Rect.fromLTWH(0, leftPress, size.width, lineSize));
-    for (int i = 0; i < size.height / 5; i++) {
-      canvas.drawLine(
-        Offset(
-          i * 5.0,
-          leftPress,
-        ),
-        Offset(i * 5.0, leftPress + lineSize),
-        linePaint,
-      );
-    }
-    for (int i = 0; i < lineSize / 5; i++) {
-      canvas.drawLine(
-        Offset(0, leftPress + i * 5.0),
-        Offset(
-          size.width,
-          leftPress + i * 5.0,
-        ),
-        linePaint,
-      );
+    if (showAnimation ?? true) {
+      // 绘制横向网格
+      final linePaint = Paint();
+      final lineSize = size.height * 0.45;
+      final leftPress = (size.height + lineSize) * animationValue - lineSize;
+      linePaint.style = PaintingStyle.stroke;
+      linePaint.shader = LinearGradient(
+        colors: [Colors.transparent, boxLineColor],
+        begin: isForward ? Alignment.topCenter : Alignment(0.0, 2.0),
+        end: isForward ? Alignment(0.0, 0.5) : Alignment.topCenter,
+      ).createShader(Rect.fromLTWH(0, leftPress, size.width, lineSize));
+      for (int i = 0; i < size.height / 5; i++) {
+        canvas.drawLine(
+          Offset(
+            i * 5.0,
+            leftPress,
+          ),
+          Offset(i * 5.0, leftPress + lineSize),
+          linePaint,
+        );
+      }
+      for (int i = 0; i < lineSize / 5; i++) {
+        canvas.drawLine(
+          Offset(0, leftPress + i * 5.0),
+          Offset(
+            size.width,
+            leftPress + i * 5.0,
+          ),
+          linePaint,
+        );
+      }
     }
   }
 
