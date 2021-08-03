@@ -26,7 +26,7 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
     public static String EXTRA_FOCUS_INTERVAL = "extra_focus_interval";
     public static String EXTRA_TORCH_ENABLED = "extra_torch_enabled";
 
-    public QrReaderView(Context context, BinaryMessenger binaryMessenger, int id, Map<String, Object> params){
+    public QrReaderView(Context context, BinaryMessenger binaryMessenger, int id, Map<String, Object> params) {
         this.mContext = context;
         this.mParams = params;
         this.binaryMessenger = binaryMessenger;
@@ -42,7 +42,7 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
         _view.forceAutoFocus();
         int interval = mParams.containsKey(EXTRA_FOCUS_INTERVAL) ? (int) mParams.get(EXTRA_FOCUS_INTERVAL) : 2000;
         _view.setAutofocusInterval(interval);
-        _view.setTorchEnabled((boolean)mParams.get(EXTRA_TORCH_ENABLED));
+        _view.setTorchEnabled((boolean) mParams.get(EXTRA_TORCH_ENABLED));
 
         // 操作监听
         mMethodChannel = new MethodChannel(binaryMessenger, "me.hetian.plugins/flutter_qr_reader/reader_view_" + id);
@@ -73,6 +73,7 @@ public class QrReaderView implements PlatformView, QRCodeReaderView.OnQRCodeRead
     }
 
     boolean flashlight;
+
     @Override
     public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
         switch (methodCall.method) {

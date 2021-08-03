@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
       await stopScan();
     }
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      final query = MediaQuery.of(context);
       return new Scaffold(
         body: QrcodeReaderView(
           onScan: (result) async {
