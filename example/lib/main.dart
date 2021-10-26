@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -18,11 +16,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _flashlightState = false;
   bool _showScanView = false;
-  QrReaderViewController _controller;
+  QrReaderViewController? _controller;
 
   @override
   void initState() {
@@ -30,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void alert(String tip) {
-    ScaffoldMessenger.of(scaffoldKey.currentContext).showSnackBar(SnackBar(content: Text(tip)));
+    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(content: Text(tip)));
   }
 
   void openScanUI(BuildContext context) async {
@@ -38,9 +36,10 @@ class _MyAppState extends State<MyApp> {
       await stopScan();
     }
     Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      final query = MediaQuery.of(context);
       return new Scaffold(
         body: QrcodeReaderView(
-          onScan: (result) {
+          onScan: (result) async {
             Navigator.of(context).pop();
             alert(result);
           },
@@ -58,7 +57,7 @@ class _MyAppState extends State<MyApp> {
     _openAction = true;
     var status = await Permission.camera.status;
     print(status);
-    if (status.isUndetermined || status.isDenied || status.isPermanentlyDenied) {
+    if (status.isDenied || status.isPermanentlyDenied) {
       status = await Permission.camera.request();
       print(status);
     }
@@ -94,10 +93,10 @@ class _MyAppState extends State<MyApp> {
 
   Future startScan() async {
     assert(_controller != null);
-    _controller.startCamera((String result, _) async {
+    _controller?.startCamera((String result, _) async {
       await stopScan();
       showDialog(
-        context: scaffoldKey.currentContext,
+        context: scaffoldKey.currentContext!,
         builder: (context) {
           return AlertDialog(
             title: Text('扫码结果'),
@@ -110,7 +109,7 @@ class _MyAppState extends State<MyApp> {
 
   Future stopScan() async {
     assert(_controller != null);
-    await _controller.stopCamera();
+    await _controller?.stopCamera();
     setState(() {
       _showScanView = false;
     });
@@ -118,20 +117,19 @@ class _MyAppState extends State<MyApp> {
 
   Future flashlight() async {
     assert(_controller != null);
-    final state = await _controller.setFlashlight();
+    final state = await _controller?.setFlashlight();
     setState(() {
       _flashlightState = state ?? false;
     });
   }
 
   Future imgScan() async {
-    final imagePicker = ImagePicker.platform;
-    var image = await imagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker().getImage(source: ImageSource.gallery);
     if (image == null) return;
     final rest = await FlutterQrReader.imgScan(image.path);
 
     showDialog(
-      context: scaffoldKey.currentContext,
+      context: scaffoldKey.currentContext!,
       builder: (context) {
         return AlertDialog(
           title: Text('扫码结果'),
@@ -162,9 +160,7 @@ class _MyAppState extends State<MyApp> {
                 margin: EdgeInsets.symmetric(vertical: 12),
                 color: Colors.black12,
               ),
-              _showScanView == false
-                  ? TextButton(onPressed: () => openScan(context), child: Text('启动扫描视图'))
-                  : Text('扫描视图已经启动'),
+              _showScanView == false ? TextButton(onPressed: () => openScan(context), child: Text('启动扫描视图')) : Text('扫描视图已经启动'),
               TextButton(onPressed: flashlight, child: Text(_flashlightState == false ? '打开手电筒' : '关闭手电筒')),
               Container(
                 height: 12,

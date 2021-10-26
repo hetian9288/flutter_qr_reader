@@ -82,6 +82,9 @@ public class QRCodeReaderView extends SurfaceView
     private DecodeFrameTask decodeFrameTask;
     private Map<DecodeHintType, Object> decodeHints;
 
+    private int mWidth = -1;
+    private int mHeight = -1;
+
     public QRCodeReaderView(Context context) {
         this(context, null);
     }
@@ -137,6 +140,7 @@ public class QRCodeReaderView extends SurfaceView
 
     /**
      * 设置解码器，默认为二维码、条形码
+     *
      * @param decodeMode DecodeFormatManager.ALL_MODE, DecodeFormatManager.QRCODE_MODE, DecodeFormatManager.BARCODE_MODE
      */
     public void setDecodeHints(int decodeMode) {
@@ -286,6 +290,11 @@ public class QRCodeReaderView extends SurfaceView
         mPreviewWidth = mCameraManager.getPreviewSize().x;
         mPreviewHeight = mCameraManager.getPreviewSize().y;
 
+        double r =  (mPreviewWidth * 1.0f) / (mPreviewHeight * 1.0f);
+
+        resize(width, (int) (width * r));
+
+
         mCameraManager.stopPreview();
 
         // Fix the google.zxing.client.android.android.com.google.zxing.client.android.camera sensor rotation
@@ -375,6 +384,23 @@ public class QRCodeReaderView extends SurfaceView
             result = (info.orientation - degrees + 360) % 360;
         }
         return result;
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (-1 == mWidth || -1 == mHeight) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        } else {
+            setMeasuredDimension(mWidth, mHeight);
+        }
+    }
+
+    public void resize(int width, int height) {
+        mWidth = width;
+        mHeight = height;
+        getHolder().setFixedSize(width, height);
+        requestLayout();
+        invalidate();
     }
 
     private static class DecodeFrameTask extends AsyncTask<byte[], Void, Result> {

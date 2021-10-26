@@ -6,14 +6,14 @@ description: Demonstrates how to use the flutter_qr_reader plugin.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  image_picker: ^0.6.7+22
-  permission_handler: ^5.1.0+2
+  image_picker: ^0.7.4
+  permission_handler: ^6.1.1
 
   flutter_qr_reader:
     # When depending on this package from a real application you should use:
