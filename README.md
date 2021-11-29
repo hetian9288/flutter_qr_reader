@@ -39,7 +39,7 @@ Opt-in to the embedded views preview by adding a boolean property to the app's I
 And you will need provide the description of camera's permission to work properly, otherwise will crash your app.
 ``` 
   <key>NSCameraUsageDescription</key>
-	<string>The porpuse explaining why you will use the camera</string>
+	<string>The purpose explaining why you will use the camera</string>
 ```
 
 ## Built-in UI
