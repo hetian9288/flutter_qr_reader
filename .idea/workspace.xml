@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="864750cc-9998-4fa7-90aa-bfe0a5be0189" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/huangyulin/.android/avd/Pixel_4_XL_API_30.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -52,6 +47,12 @@
     <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/example/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
@@ -70,34 +71,16 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="550" y="330" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582969601860">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="550" y="330" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.23.1440.831@0.23.1440.831" timestamp="1582969601860" />
-    <state width="1360" height="204" key="GridCell.Tab.0.bottom" timestamp="1583042143247">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.bottom/0.23.1440.831@0.23.1440.831" timestamp="1583042143247" />
-    <state width="1360" height="204" key="GridCell.Tab.0.center" timestamp="1583042143246">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.center/0.23.1440.831@0.23.1440.831" timestamp="1583042143246" />
-    <state width="1360" height="204" key="GridCell.Tab.0.left" timestamp="1583042143246">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.left/0.23.1440.831@0.23.1440.831" timestamp="1583042143246" />
-    <state width="1360" height="204" key="GridCell.Tab.0.right" timestamp="1583042143247">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.right/0.23.1440.831@0.23.1440.831" timestamp="1583042143247" />
-    <state x="202" y="73" key="SettingsEditor" timestamp="1583035081192">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="202" y="73" key="SettingsEditor/0.23.1440.831@0.23.1440.831" timestamp="1583035081192" />
-    <state x="359" y="191" width="684" height="486" key="find.popup" timestamp="1583035392955">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="359" y="191" width="684" height="486" key="find.popup/0.23.1440.831@0.23.1440.831" timestamp="1583035392955" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
