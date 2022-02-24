@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
             ),
             FlatButton(
               onPressed: () async {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanViewDemo()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ScanViewDemo(false)));
               },
               child: Text("独立UI"),
             ),
