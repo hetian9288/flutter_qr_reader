@@ -119,8 +119,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void onScan(String v, List<Offset> offsets) {
-    print([v, offsets]);
+  void onScan(String v, String imageS, List<Offset> offsets) {
+    print([v, imageS, offsets]);
     setState(() {
       data = v;
     });

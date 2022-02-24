@@ -29,6 +29,7 @@ class QrReaderView extends StatefulWidget {
 
   final int autoFocusIntervalInMs;
   final bool torchEnabled;
+  final bool imageEnabled;
   final double width;
   final double height;
 
@@ -39,6 +40,7 @@ class QrReaderView extends StatefulWidget {
     this.callback,
     this.autoFocusIntervalInMs = 500,
     this.torchEnabled = false,
+    this.imageEnabled = false,
   }) : super(key: key);
 
   @override
@@ -89,7 +91,7 @@ class _QrReaderViewState extends State<QrReaderView> {
   }
 
   void _onPlatformViewCreated(int id) {
-    widget.callback(QrReaderViewController(id));
+    widget.callback(QrReaderViewController(id,widget.imageEnabled));
   }
 
   @override
@@ -98,12 +100,13 @@ class _QrReaderViewState extends State<QrReaderView> {
   }
 }
 
-typedef ReadChangeBack = void Function(String, List<Offset>);
+typedef ReadChangeBack = void Function(String, String, List<Offset>);
 
 class QrReaderViewController {
   final int id;
+  final bool imageEnabled;
   final MethodChannel _channel;
-  QrReaderViewController(this.id) : _channel = MethodChannel('me.hetian.flutter_qr_reader.reader_view_$id') {
+  QrReaderViewController(this.id,this.imageEnabled) : _channel = MethodChannel('me.hetian.flutter_qr_reader.reader_view_$id') {
     _channel.setMethodCallHandler(_handleMessages);
   }
   ReadChangeBack onQrBack;
@@ -116,14 +119,16 @@ class QrReaderViewController {
           final pointsStrs = call.arguments["points"];
           for (String point in pointsStrs) {
             final a = point.split(",");
-            points.add(Offset(double.tryParse(a.first), double.tryParse(a.last)));
+            points.add(
+                Offset(double.tryParse(a.first), double.tryParse(a.last)));
           }
         }
-
-        this.onQrBack(call.arguments["text"], points);
+        this.onQrBack(
+            call.arguments["text"], call.arguments["imageURL"], points);
         break;
     }
   }
+  // onQRCodeImageRead
 
   // 打开手电筒
   Future<bool> setFlashlight() async {
@@ -133,7 +138,10 @@ class QrReaderViewController {
   // 开始扫码
   Future startCamera(ReadChangeBack onQrBack) async {
     this.onQrBack = onQrBack;
-    return _channel.invokeMethod("startCamera");
+    Map params = <String, dynamic>{
+      "imageEnabled": imageEnabled,
+    };
+    return _channel.invokeMethod("startCamera",params);
   }
 
   // 结束扫码

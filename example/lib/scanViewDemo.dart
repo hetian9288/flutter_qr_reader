@@ -30,7 +30,7 @@ class _ScanViewDemoState extends State<ScanViewDemo> {
     );
   }
 
-  Future onScan(String data) async {
+  Future onScan(String data,String imageStr) async {
     await showCupertinoDialog(
       context: context,
       builder: (context) {

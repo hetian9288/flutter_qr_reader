@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="864750cc-9998-4fa7-90aa-bfe0a5be0189" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/android/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/example/android/gradle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/example/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/ios/Runner.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/scanViewDemo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/scanViewDemo.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_qr_reader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_qr_reader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/Classes/QrReaderViewController.m" beforeDir="false" afterPath="$PROJECT_DIR$/ios/Classes/QrReaderViewController.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -16,6 +27,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/eshore/.android/avd/Pixel_2_API_30.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -24,6 +36,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="KonanWorkspace">
@@ -40,21 +57,24 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="flutter.settings" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>$USER_HOME$/.subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -70,34 +90,33 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="550" y="330" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1582969601860">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="550" y="330" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog/0.23.1440.831@0.23.1440.831" timestamp="1582969601860" />
-    <state width="1360" height="204" key="GridCell.Tab.0.bottom" timestamp="1583042143247">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.bottom/0.23.1440.831@0.23.1440.831" timestamp="1583042143247" />
-    <state width="1360" height="204" key="GridCell.Tab.0.center" timestamp="1583042143246">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.center/0.23.1440.831@0.23.1440.831" timestamp="1583042143246" />
-    <state width="1360" height="204" key="GridCell.Tab.0.left" timestamp="1583042143246">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.left/0.23.1440.831@0.23.1440.831" timestamp="1583042143246" />
-    <state width="1360" height="204" key="GridCell.Tab.0.right" timestamp="1583042143247">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state width="1360" height="204" key="GridCell.Tab.0.right/0.23.1440.831@0.23.1440.831" timestamp="1583042143247" />
-    <state x="202" y="73" key="SettingsEditor" timestamp="1583035081192">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="202" y="73" key="SettingsEditor/0.23.1440.831@0.23.1440.831" timestamp="1583035081192" />
-    <state x="359" y="191" width="684" height="486" key="find.popup" timestamp="1583035392955">
-      <screen x="0" y="23" width="1440" height="831" />
-    </state>
-    <state x="359" y="191" width="684" height="486" key="find.popup/0.23.1440.831@0.23.1440.831" timestamp="1583035392955" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="image" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+      <path value="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_qr_reader" />
+    </ignored-roots>
   </component>
 </project>

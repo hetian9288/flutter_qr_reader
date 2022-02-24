@@ -10,6 +10,7 @@
 @interface QrReaderViewController()<AVCaptureMetadataOutputObjectsDelegate>
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *videoPreviewLayer;
+@property(nonatomic,strong)  AVCaptureStillImageOutput *stillImageOutput;//拍照
 @end
 
 @implementation QrReaderViewController{
@@ -21,6 +22,7 @@
     NSNumber *width;
     BOOL isOpenFlash;
     BOOL _isReading;
+    BOOL _isImageing;
     AVCaptureDevice *captureDevice;
 }
 
@@ -55,6 +57,7 @@
     if ([call.method isEqualToString:@"flashlight"]) {
         [self setFlashlight];
     }else if ([call.method isEqualToString:@"startCamera"]) {
+        _isImageing = call.arguments[@"imageEnabled"];
         [self startReading];
     } else if ([call.method isEqualToString:@"stopCamera"]) {
         [self stopReading];
@@ -71,6 +74,14 @@
     NSError *error;
     _captureSession = [[AVCaptureSession alloc] init];
     captureDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+
+    _stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+    NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                    AVVideoCodecJPEG, AVVideoCodecKey,
+                                    nil];
+    [_stillImageOutput setOutputSettings:outputSettings];
+
+
     AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:captureDevice error:&error];
     if (!input) {
         NSLog(@"%@", [error localizedDescription]);
@@ -79,6 +90,11 @@
     [_captureSession addInput:input];
     AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
     [_captureSession addOutput:captureMetadataOutput];
+
+    if ([_captureSession canAddOutput:_stillImageOutput]) {
+        [_captureSession addOutput:_stillImageOutput];
+    }
+    [_captureSession startRunning];
     dispatch_queue_t dispatchQueue;
     dispatchQueue = dispatch_queue_create("myQueue", NULL);
     [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
@@ -87,20 +103,63 @@
     [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_videoPreviewLayer setFrame:_qrcodeview.layer.bounds];
     [_qrcodeview.layer addSublayer:_videoPreviewLayer];
-    [_captureSession startRunning];
     return YES;
 }
 
+- (AVCaptureConnection *)connectionWithMediaType:(NSString *)mediaType fromConnections:(NSArray *)connections {
+    for ( AVCaptureConnection *connection in connections ) {
+        for ( AVCaptureInputPort *port in [connection inputPorts] ) {
+            if ( [[port mediaType] isEqual:mediaType] ) {
+                return connection;
+            }
+        }
+    }
+    return nil;
+}
+
+- (void)captureImage:(NSMutableDictionary *)dic {
+    AVCaptureConnection *stillImageConnection = [self connectionWithMediaType:AVMediaTypeVideo fromConnections:[[self stillImageOutput] connections]];
+
+
+    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:stillImageConnection
+                                                         completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+         if (imageDataSampleBuffer) {
+             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+             UIImage *image = [UIImage imageWithData:imageData];
+             NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+             // 得到本地沙盒中名为"MyImage"的路径，"MyImage"是保存的图片名
+             NSString *urlString = [NSString stringWithFormat:@"MyImage"];
+             NSString *imageFilePath = [path stringByAppendingPathComponent:urlString];
+             // 将取得的图片写入本地的沙盒中，其中0.5表示压缩比例，1表示不压缩，数值越小压缩比例越大
+             BOOL success = [UIImageJPEGRepresentation(image, 0.5) writeToFile:imageFilePath  atomically:YES];
+             if (success){
+                 NSLog(@"写入本地成功");
+             }
+             [dic setObject:imageFilePath forKey:@"imageURL"];
+             [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
+             [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+             _isReading = NO;
+         }
+     }];
+}
+
+
 
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
+
     if (metadataObjects != nil && [metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
         if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
             NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
             [dic setObject:[metadataObj stringValue] forKey:@"text"];
-            [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
-            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
-            _isReading = NO;
+            if (_isImageing) {
+                [self captureImage:dic];
+            } else {
+                [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
+                [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+                _isReading = NO;
+            }
+
         }
     }
 }
