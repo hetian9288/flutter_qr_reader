@@ -64,7 +64,6 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
-    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -98,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645707263520</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="安卓端添加判断是否返回扫码图片地址">
+      <created>1645755865552</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1645755865552</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,6 +140,7 @@
       <path value="$PROJECT_DIR$/example/ios/.symlinks/plugins/flutter_qr_reader" />
     </ignored-roots>
     <MESSAGE value="ios端添加判断是否返回扫码图片地址" />
-    <option name="LAST_COMMIT_MESSAGE" value="ios端添加判断是否返回扫码图片地址" />
+    <MESSAGE value="安卓端添加判断是否返回扫码图片地址" />
+    <option name="LAST_COMMIT_MESSAGE" value="安卓端添加判断是否返回扫码图片地址" />
   </component>
 </project>
