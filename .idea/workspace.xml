@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="864750cc-9998-4fa7-90aa-bfe0a5be0189" name="Default Changelist" comment="ios端添加判断是否返回扫码图片地址">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/hetian/flutter_qr_reader/readerView/QRCodeReaderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/hetian/flutter_qr_reader/readerView/QRCodeReaderView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/me/hetian/flutter_qr_reader/views/QrReaderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/me/hetian/flutter_qr_reader/views/QrReaderView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/lib/scanViewDemo.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/scanViewDemo.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ios/flutter_qr_reader.podspec" beforeDir="false" afterPath="$PROJECT_DIR$/ios/flutter_qr_reader.podspec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/qrcode_reader_view.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,6 +64,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -87,7 +91,14 @@
       <option name="project" value="LOCAL" />
       <updated>1645704526834</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="ios端添加判断是否返回扫码图片地址">
+      <created>1645707263520</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1645707263520</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

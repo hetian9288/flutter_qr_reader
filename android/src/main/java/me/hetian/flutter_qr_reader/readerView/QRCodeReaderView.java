@@ -17,8 +17,11 @@ package me.hetian.flutter_qr_reader.readerView;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.graphics.PointF;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -32,22 +35,21 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
-import com.google.zxing.client.android.camera.CameraManager;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
+import com.google.zxing.client.android.camera.CameraManager;
+
 import static android.hardware.Camera.getCameraInfo;
-import static me.hetian.flutter_qr_reader.QRCodeDecoder.HINTS;
 
 /**
  * QRCodeReaderView Class which uses ZXING lib and let you easily integrate a QR decoder view.
@@ -60,7 +62,8 @@ public class QRCodeReaderView extends SurfaceView
 
     public interface OnQRCodeReadListener {
 
-        void onQRCodeRead(String text, PointF[] points);
+//        void onQRCodeRead(String text, PointF[] points);
+        void onQRCodeRead(String text,byte[] photoBytes,int rotation, PointF[] points);
     }
 
     private OnQRCodeReadListener mOnQRCodeReadListener;
@@ -74,6 +77,9 @@ public class QRCodeReaderView extends SurfaceView
     private boolean mQrDecodingEnabled = true;
     private DecodeFrameTask decodeFrameTask;
     private Map<DecodeHintType, Object> decodeHints;
+    private byte[] photoBytes;//扫描的图像数据
+    private boolean needPhoto = false;//是否需要拍照
+
 
     public QRCodeReaderView(Context context) {
         this(context, null);
@@ -179,6 +185,15 @@ public class QRCodeReaderView extends SurfaceView
             mCameraManager.setTorchEnabled(enabled);
         }
     }
+
+    /**
+     * 设置是否需要拍照
+     * default value is false
+     */
+    public void setNeedPhoto(boolean needPhoto) {
+        this.needPhoto = needPhoto;
+    }
+
 
     /**
      * Allows user to specify the google.zxing.client.android.android.com.google.zxing.client.android.camera ID, rather than determine
@@ -345,7 +360,7 @@ public class QRCodeReaderView extends SurfaceView
         return result;
     }
 
-    private static class DecodeFrameTask extends AsyncTask<byte[], Void, Result> {
+    private class DecodeFrameTask extends AsyncTask<byte[], Void, Result> {
 
         private final WeakReference<QRCodeReaderView> viewRef;
         private final WeakReference<Map<DecodeHintType, Object>> hintsRef;
@@ -372,24 +387,26 @@ public class QRCodeReaderView extends SurfaceView
             final BinaryBitmap bitmap = new BinaryBitmap(hybBin);
 
             try {
-                return view.mQRCodeReader.decode(bitmap, hintsRef.get());
+//                return view.mQRCodeReader.decode(bitmap, hintsRef.get());
+                Result result = view.mQRCodeReader.decode(bitmap, hintsRef.get());
+                if(result.getText()!=null&&result.getText().length()>0 && needPhoto){
+                    //确保扫描二维码成功，需要拍照才保存数据
+                    byte[] bytes = params[0];
+                    if(bytes!=null&&params[0].length>0){
+                        //图像数据不为空
+                        //旋转图片
+                        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                        YuvImage yuv = new YuvImage(bytes, ImageFormat.NV21, view.mPreviewWidth, view.mPreviewHeight, null);
+                        yuv.compressToJpeg(new Rect(0, 0, view.mPreviewWidth, view.mPreviewHeight), 100, stream);
+                        photoBytes = stream.toByteArray();
+                    }
+
+                }
+                return result;
             } catch (ChecksumException e) {
                 SimpleLog.d(TAG, "ChecksumException", e);
             } catch (NotFoundException e) {
-                MultiFormatReader multiFormatReader = new MultiFormatReader();
-                try {
-                    SimpleLog.d(TAG, "No QR Code found");
-
-                    LuminanceSource invertedSource = source.invert();
-                    BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(invertedSource));
-
-                    return multiFormatReader.decode(binaryBitmap, HINTS);
-                } catch (NotFoundException exception) {
-                    SimpleLog.d(TAG, "No Inverted QR Code found");
-                    return null;
-                } finally {
-                    multiFormatReader.reset();
-                }
+                SimpleLog.d(TAG, "No QR Code found");
             } catch (FormatException e) {
                 SimpleLog.d(TAG, "FormatException", e);
             } finally {
@@ -410,7 +427,8 @@ public class QRCodeReaderView extends SurfaceView
                 // Transform resultPoints to View coordinates
                 final PointF[] transformedPoints =
                         transformToViewCoordinates(view, result.getResultPoints());
-                view.mOnQRCodeReadListener.onQRCodeRead(result.getText(), transformedPoints);
+//                view.mOnQRCodeReadListener.onQRCodeRead(result.getText(), transformedPoints);
+                view.mOnQRCodeReadListener.onQRCodeRead(result.getText(),photoBytes,getCameraDisplayOrientation(), transformedPoints);
             }
         }
 

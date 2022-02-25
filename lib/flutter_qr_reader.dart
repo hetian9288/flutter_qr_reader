@@ -29,7 +29,7 @@ class QrReaderView extends StatefulWidget {
 
   final int autoFocusIntervalInMs;
   final bool torchEnabled;
-  final bool imageEnabled;
+  final bool needPhoto;
   final double width;
   final double height;
 
@@ -40,7 +40,7 @@ class QrReaderView extends StatefulWidget {
     this.callback,
     this.autoFocusIntervalInMs = 500,
     this.torchEnabled = false,
-    this.imageEnabled = false,
+    this.needPhoto = false,
   }) : super(key: key);
 
   @override
@@ -63,6 +63,7 @@ class _QrReaderViewState extends State<QrReaderView> {
           "height": (widget.height * window.devicePixelRatio).floor(),
           "extra_focus_interval": widget.autoFocusIntervalInMs,
           "extra_torch_enabled": widget.torchEnabled,
+          "extra_need_photo": widget.needPhoto,
         },
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
@@ -78,6 +79,7 @@ class _QrReaderViewState extends State<QrReaderView> {
           "height": widget.height,
           "extra_focus_interval": widget.autoFocusIntervalInMs,
           "extra_torch_enabled": widget.torchEnabled,
+          "extra_need_photo": widget.needPhoto,
         },
         creationParamsCodec: const StandardMessageCodec(),
         onPlatformViewCreated: _onPlatformViewCreated,
@@ -91,7 +93,7 @@ class _QrReaderViewState extends State<QrReaderView> {
   }
 
   void _onPlatformViewCreated(int id) {
-    widget.callback(QrReaderViewController(id,widget.imageEnabled));
+    widget.callback(QrReaderViewController(id,widget.needPhoto));
   }
 
   @override
@@ -124,7 +126,7 @@ class QrReaderViewController {
           }
         }
         this.onQrBack(
-            call.arguments["text"], call.arguments["imageURL"], points);
+            call.arguments["text"], call.arguments["phontoPath"], points);
         break;
     }
   }

@@ -10,7 +10,7 @@ class QrcodeReaderView extends StatefulWidget {
   final Widget headerWidget;
   final Future Function(String,String) onScan;
   final double scanBoxRatio;
-  final bool imageEnabled;
+  final bool needPhoto;
   final Color boxLineColor;
   final Widget helpWidget;
   QrcodeReaderView({
@@ -19,7 +19,7 @@ class QrcodeReaderView extends StatefulWidget {
                      this.headerWidget,
                      this.boxLineColor = Colors.cyanAccent,
                      this.helpWidget,
-                     this.imageEnabled = false,
+                     this.needPhoto = false,
                      this.scanBoxRatio = 0.85,
                    }) : super(key: key);
 
@@ -152,7 +152,7 @@ class QrcodeReaderViewState extends State<QrcodeReaderView>
               child: QrReaderView(
                 width: constraints.maxWidth,
                 height: constraints.maxHeight,
-                imageEnabled: widget.imageEnabled,
+                needPhoto: widget.needPhoto,
                 callback: _onCreateController,
               ),
             ),

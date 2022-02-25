@@ -17,5 +17,6 @@ QR code (scan code &#x2F; picture) recognition （AndroidView&#x2F;UiKitView）
   s.dependency 'Flutter'
 
   s.ios.deployment_target = '8.0'
+  s.static_framework =true
 end
 
