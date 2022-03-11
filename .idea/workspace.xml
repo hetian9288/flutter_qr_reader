@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="864750cc-9998-4fa7-90aa-bfe0a5be0189" name="Default Changelist" comment="安卓端添加判断是否返回扫码图片地址">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_qr_reader.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +59,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -105,7 +107,21 @@
       <option name="project" value="LOCAL" />
       <updated>1645756134447</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="安卓端添加判断是否返回扫码图片地址">
+      <created>1645757270125</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1645757270125</updated>
+    </task>
+    <task id="LOCAL-00006" summary="安卓端添加判断是否返回扫码图片地址">
+      <created>1645757407027</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1645757407027</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -126,7 +126,7 @@ class QrReaderViewController {
           }
         }
         this.onQrBack(
-            call.arguments["text"], call.arguments["phontoPath"], points);
+            call.arguments["text"], call.arguments["photoPath"], points);
         break;
     }
   }
