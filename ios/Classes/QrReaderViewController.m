@@ -135,7 +135,7 @@
              if (success){
                  NSLog(@"写入本地成功");
              }
-             [dic setObject:imageFilePath forKey:@"imageURL"];
+             [dic setObject:imageFilePath forKey:@"photoPath"];
              [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
              [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
              _isReading = NO;
