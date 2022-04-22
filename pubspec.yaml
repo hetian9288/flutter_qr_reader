@@ -1,4 +1,5 @@
 name: flutter_qr_reader
+description： A flutter plugin for install apk for android; and using url to go to app store for iOS.
 version: 1.0.5
 homepage: https://github.com/hetian9288/flutter_qr_reader
 
