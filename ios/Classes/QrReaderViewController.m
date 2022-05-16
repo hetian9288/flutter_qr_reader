@@ -78,11 +78,12 @@
     }
     [_captureSession addInput:input];
     AVCaptureMetadataOutput *captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
+  
     [_captureSession addOutput:captureMetadataOutput];
     dispatch_queue_t dispatchQueue;
     dispatchQueue = dispatch_queue_create("myQueue", NULL);
     [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatchQueue];
-    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObject:AVMetadataObjectTypeQRCode]];
+    [captureMetadataOutput setMetadataObjectTypes:[NSArray arrayWithObjects:AVMetadataObjectTypeQRCode, AVMetadataObjectTypeCode128Code,nil]];
     _videoPreviewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
     [_videoPreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_videoPreviewLayer setFrame:_qrcodeview.layer.bounds];
@@ -95,13 +96,11 @@
 -(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     if (metadataObjects != nil && [metadataObjects count] > 0) {
         AVMetadataMachineReadableCodeObject *metadataObj = [metadataObjects objectAtIndex:0];
-        if ([[metadataObj type] isEqualToString:AVMetadataObjectTypeQRCode]) {
-            NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
-            [dic setObject:[metadataObj stringValue] forKey:@"text"];
-            [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
-            [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
-            _isReading = NO;
-        }
+        NSMutableDictionary *dic = [[NSMutableDictionary alloc] init];
+        [dic setObject:[metadataObj stringValue] forKey:@"text"];
+        [_channel invokeMethod:@"onQRCodeRead" arguments:dic];
+        [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
+        _isReading = NO;
     }
 }
 
